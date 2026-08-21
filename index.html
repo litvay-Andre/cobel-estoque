@@ -125,7 +125,7 @@
 <!-- ===================== TELA DE LOGIN ===================== -->
 <div id="telaLogin">
   <div class="caixa-login">
-    <h2>🚗 Estoque de Carros</h2>
+    <h2> Estoque de Carros</h2>
     <p>Acesso restrito à equipe técnica — Cobel</p>
     <div class="campo"><label>Usuário</label><input type="text" id="loginUsuario"></div>
     <div class="campo"><label>Senha</label><input type="password" id="loginSenha"></div>
@@ -136,7 +136,7 @@
 
 <div id="app" style="display:none;">
 <header>
-  <h1>🚗 Estoque de Carros — <span>Cobel</span></h1>
+  <h1> Estoque de Carros — <span>Cobel</span></h1>
   <nav>
     <button id="tabEstoque" class="ativo">Estoque</button>
     <button id="tabVendidos">Vendidos</button>
@@ -147,7 +147,7 @@
 <main>
   <div class="toolbar">
     <input type="text" id="busca" placeholder="Buscar por chassi, modelo ou cor...">
-    <label class="filtro-atraso"><input type="checkbox" id="filtroAtraso"> ⚠️ Só bateria atrasada</label>
+    <label class="filtro-atraso"><input type="checkbox" id="filtroAtraso">  Inspeção Atrasada</label>
     <button class="acao" id="btnNovoCarro">+ Novo Carro</button>
   </div>
 
@@ -161,25 +161,25 @@
     <button class="fechar" onclick="fecharModal('modalFicha')">&times;</button>
     <h2 id="fichaTitulo">Carro</h2>
     <div id="avisoVendido" class="aviso-vendido" style="display:none;">
-      Este carro já foi vendido. Você está vendo o histórico apenas para consulta.
+      Este carro já foi vendido. Apenas Consulta.
     </div>
     <div id="fichaDados"></div>
 
     <div class="fotos-grid" id="fichaFotosGerais"></div>
     <div id="acoesFicha" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-      <label class="acao secundario" style="cursor:pointer;">📷 Foto geral
+      <label class="acao secundario" style="cursor:pointer;"> Foto Padrão
         <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'geral')">
       </label>
-      <label class="acao secundario" style="cursor:pointer;">⚠️ Foto de avaria
+      <label class="acao secundario" style="cursor:pointer;"> Avaria
         <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'avaria')">
       </label>
-      <button class="acao" onclick="registrarInspecao()">🔋 Registrar inspeção de bateria</button>
-      <button class="acao perigo" onclick="abrirModalVenda()">Marcar como vendido</button>
+      <button class="acao" onclick="registrarInspecao()"> Registrar Inspeção de Bateria</button>
+      <button class="acao perigo" onclick="abrirModalVenda()">Marcar como Vendido</button>
     </div>
 
     <div class="tabs">
       <button id="tabHistorico" class="ativo" onclick="mudarSubTab('historico')">Histórico</button>
-      <button id="tabPendencias" onclick="mudarSubTab('pendencias')">Serviços pendentes</button>
+      <button id="tabPendencias" onclick="mudarSubTab('pendencias')">Serviços Pendentes</button>
     </div>
 
     <div id="subHistorico">
@@ -245,12 +245,12 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxFoyDfZGKndTUnJgOJHthf
 // Serviços do checklist de preparação/entrega. Ajuste essa lista à vontade.
 const SERVICOS_PADRAO = [
   'Vitrificação',
-  'Aplicação de película',
-  'Martelinho de ouro (funilaria)',
-  'Polimento',
-  'Higienização interna',
-  'Instalação de acessórios',
-  'Revisão de PDI'
+  'Película',
+  'Martelinho de Ouro',
+  'Funilaria',
+  'Película de Proteção',
+  'Insulfilm',
+  'Envelopamento'
 ];
 
 let carrosCache = [];
@@ -367,7 +367,7 @@ function renderizarLista(){
       <p>Chassi: ${c.Chassi}</p>
       <p>Cor: ${c.Cor} · Ano: ${c.Ano||'-'}</p>
       <span class="badge ${c.inspecaoAtrasada?'atraso':'ok'}">
-        ${c.inspecaoAtrasada ? '⚠️ Bateria atrasada ('+c.diasDesdeInspecao+'d)' : '🔋 Bateria em dia'}
+        ${c.inspecaoAtrasada ? 'Inspeção Atrasada ('+c.diasDesdeInspecao+'d)' : 'Inspeção em Dia'}
       </span>
     </div>
   `).join('');
@@ -509,7 +509,7 @@ async function salvarPendencias(){
   if(outro){
     await chamarApiPost({action:'adicionarPendencia', chassi: chassiAtual, item: outro, local: ''});
   }
-  mostrarToast('Serviços adicionados.');
+  mostrarToast('Serviços Adicionados.');
   abrirFicha(chassiAtual);
 }
 
@@ -521,7 +521,7 @@ async function concluirPendencia(id){
 
 async function registrarInspecao(){
   await chamarApiPost({action:'registrarInspecaoBateria', chassi: chassiAtual});
-  mostrarToast('Inspeção de bateria registrada.');
+  mostrarToast('Inspeção de Bateria Registrada.');
   abrirFicha(chassiAtual);
   carregarCarros();
 }
@@ -532,7 +532,7 @@ async function confirmarVenda(){
   await chamarApiPost({action:'marcarVendido', chassi: chassiAtual, dataVenda: data});
   fecharModal('modalVenda');
   fecharModal('modalFicha');
-  mostrarToast('Carro marcado como vendido.');
+  mostrarToast('Carro Marcado como Vendido.');
   carregarCarros();
 }
 
@@ -543,12 +543,12 @@ function enviarFoto(event, categoria){
   const leitor = new FileReader();
   leitor.onload = async function(){
     const base64 = leitor.result.split(',')[1];
-    mostrarToast('Enviando foto...');
+    mostrarToast('Enviando Foto...');
     await chamarApiPost({
       action:'uploadFoto', chassi: chassiAtual, nomeArquivo: arquivo.name,
       base64, tipoMime: arquivo.type, categoria
     });
-    mostrarToast('Foto enviada!');
+    mostrarToast('Foto Enviada!');
     abrirFicha(chassiAtual);
   };
   leitor.readAsDataURL(arquivo);
@@ -568,7 +568,7 @@ async function salvarNovoCarro(){
   }
   await chamarApiPost({action:'cadastrarCarro', dados});
   fecharModal('modalNovoCarro');
-  mostrarToast('Carro cadastrado!');
+  mostrarToast('Carro Cadastrado!');
   carregarCarros();
 }
 </script>
