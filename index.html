@@ -112,10 +112,12 @@
 
     input[type=text] {
       flex: 1;
-      min-width: 200px;
+      min-width: 150px;
     }
 
-    button.acao {
+    /* Alterado de button.acao para .acao para pegar as labels de fotos */
+    .acao {
+      display: inline-block;
       background: var(--accent);
       color: #fff;
       border: none;
@@ -125,26 +127,28 @@
       font-size: 14px;
       font-weight: 500;
       transition: .15s;
+      text-align: center;
     }
 
-    button.acao:hover {
+    .acao:hover {
       background: var(--accent-esc);
     }
 
-    button.secundario {
+    .secundario {
       background: #e2e8f0;
       color: var(--texto);
     }
 
-    button.secundario:hover {
+    .secundario:hover {
       background: #cbd5e1;
     }
 
-    button.perigo {
+    .perigo {
       background: var(--vermelho);
+      color: #fff;
     }
 
-    button.perigo:hover {
+    .perigo:hover {
       background: #b91c1c;
     }
 
@@ -480,7 +484,22 @@
     
     <main>
       <div class="toolbar">
-        <input type="text" id="busca" placeholder="Buscar por chassi, modelo ou cor...">
+        <input type="text" id="busca" placeholder="Buscar por chassi...">
+        
+        <!-- Filtro de Modelo -->
+        <select id="filtroModelo">
+          <option value="">Todos os Modelos</option>
+          <option value="jaecoo 7">Jaecoo 7</option>
+          <option value="jaecoo 5">Jaecoo 5</option>
+          <option value="jaecoo 8">Jaecoo 8</option>
+          <option value="omoda 5">Omoda 5</option>
+          <option value="omoda 7">Omoda 7</option>
+          <option value="omoda 4">Omoda 4</option>
+        </select>
+
+        <!-- Filtro de Cor -->
+        <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
+
         <label class="filtro-atraso">
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
@@ -504,12 +523,13 @@
       <div class="fotos-grid" id="fichaFotosGerais"></div>
       
       <div id="acoesFicha" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <!-- Os botões de foto agora usarão o CSS atualizado para ficarem visíveis -->
         <label class="acao secundario" style="cursor:pointer;"> 
-          Foto Padrão
+          📸 Foto Padrão
           <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'geral')">
         </label>
         <label class="acao secundario" style="cursor:pointer;"> 
-          Avaria
+          ⚠️ Avaria
           <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'avaria')">
         </label>
         <button class="acao" onclick="registrarInspecao()">Registrar Inspeção de Bateria</button>
@@ -565,7 +585,16 @@
       <div class="linha-2">
         <div class="campo">
           <label>Modelo *</label>
-          <input type="text" id="novoModelo">
+          <!-- Seletor em vez de campo de texto -->
+          <select id="novoModelo">
+            <option value="">Selecione o modelo...</option>
+            <option value="Jaecoo 7">Jaecoo 7</option>
+            <option value="Jaecoo 5">Jaecoo 5</option>
+            <option value="Jaecoo 8">Jaecoo 8</option>
+            <option value="Omoda 5">Omoda 5</option>
+            <option value="Omoda 7">Omoda 7</option>
+            <option value="Omoda 4">Omoda 4</option>
+          </select>
         </div>
         <div class="campo">
           <label>Cor *</label>
@@ -748,12 +777,21 @@
     function renderizarLista() {
       const busca = document.getElementById('busca').value.trim().toLowerCase();
       const soAtraso = document.getElementById('filtroAtraso').checked;
+      const filtroModelo = document.getElementById('filtroModelo').value.trim().toLowerCase();
+      const filtroCor = document.getElementById('filtroCor').value.trim().toLowerCase();
       
-      let filtrados = carrosCache.filter(c =>
-        (c.Chassi || '').toLowerCase().includes(busca) ||
-        (c.Modelo || '').toLowerCase().includes(busca) ||
-        (c.Cor || '').toLowerCase().includes(busca)
-      );
+      let filtrados = carrosCache.filter(c => {
+        const textoGeral = ((c.Chassi || '') + ' ' + (c.Modelo || '') + ' ' + (c.Cor || '')).toLowerCase();
+        
+        // Verifica o campo busca
+        const passaBusca = textoGeral.includes(busca);
+        // Verifica o filtro de modelo exato (se selecionado)
+        const passaModelo = filtroModelo === '' || (c.Modelo || '').toLowerCase() === filtroModelo;
+        // Verifica o filtro de cor (se digitado)
+        const passaCor = filtroCor === '' || (c.Cor || '').toLowerCase().includes(filtroCor);
+        
+        return passaBusca && passaModelo && passaCor;
+      });
       
       if (soAtraso) {
         filtrados = filtrados.filter(c => c.inspecaoAtrasada);
@@ -779,8 +817,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Eventos de Filtro
       document.getElementById('busca').addEventListener('input', renderizarLista);
       document.getElementById('filtroAtraso').addEventListener('change', renderizarLista);
+      document.getElementById('filtroModelo').addEventListener('change', renderizarLista);
+      document.getElementById('filtroCor').addEventListener('input', renderizarLista);
+
       document.getElementById('btnNovoCarro').addEventListener('click', () => abrirModal('modalNovoCarro'));
       
       document.getElementById('tabEstoque').addEventListener('click', () => {
@@ -800,21 +842,9 @@
       cont.innerHTML = '<div class="carregando">Carregando vendidos...</div>';
       
       const dados = await chamarApi({ action: 'listarVendidos' });
-      const lista = dados.vendidos || [];
+      carrosCache = dados.vendidos || []; // Salva no cache para os filtros funcionarem também nos vendidos
       
-      if (lista.length === 0) { 
-        cont.innerHTML = '<div class="vazio">Nenhum carro vendido ainda.</div>'; 
-        return; 
-      }
-      
-      cont.innerHTML = lista.map(c => `
-        <div class="card-carro vendido-card" onclick="abrirFicha('${c.Chassi}')">
-          <h3>${c.Modelo}</h3>
-          <p>Chassi: ${c.Chassi}</p>
-          <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
-          <p><b>Vendido em:</b> ${c.DataVenda}</p>
-        </div>
-      `).join('');
+      renderizarLista(); // Usa a mesma função de renderização que agora aplica os filtros
     }
 
     // ---------- ficha do carro ----------
@@ -955,7 +985,13 @@
       await chamarApiPost({ action: 'registrarInspecaoBateria', chassi: chassiAtual });
       mostrarToast('Inspeção de Bateria Registrada.');
       abrirFicha(chassiAtual);
-      carregarCarros();
+      
+      // Se estiver na aba estoques, recarrega estoques. Se na aba vendidos, recarrega vendidos
+      if (document.getElementById('tabEstoque').classList.contains('ativo')) {
+        carregarCarros();
+      } else {
+        carregarVendidos();
+      }
     }
 
     function abrirModalVenda() { 
@@ -998,7 +1034,12 @@
       fecharModal('modalRemover');
       fecharModal('modalFicha');
       mostrarToast('Carro removido.');
-      carregarCarros();
+      
+      if (document.getElementById('tabEstoque').classList.contains('ativo')) {
+        carregarCarros();
+      } else {
+        carregarVendidos();
+      }
     }
 
     // ---------- fotos ----------
