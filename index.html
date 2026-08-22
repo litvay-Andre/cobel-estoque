@@ -177,6 +177,10 @@
       <button class="acao perigo" onclick="abrirModalVenda()">Marcar como Vendido</button>
     </div>
 
+    <div style="margin-top:8px;">
+      <button class="acao perigo" onclick="abrirModalRemover()">Remover carro</button>
+    </div>
+
     <div class="tabs">
       <button id="tabHistorico" class="ativo" onclick="mudarSubTab('historico')">Histórico</button>
       <button id="tabPendencias" onclick="mudarSubTab('pendencias')">Serviços Pendentes</button>
@@ -231,6 +235,21 @@
     <h2>Marcar carro como vendido</h2>
     <div class="campo"><label>Data da venda</label><input type="date" id="dataVenda"></div>
     <button class="acao perigo" style="width:100%;" onclick="confirmarVenda()">Confirmar venda</button>
+  </div>
+</div>
+
+<!-- MODAL: REMOVER CARRO -->
+<div class="modal-fundo" id="modalRemover">
+  <div class="modal">
+    <button class="fechar" onclick="fecharModal('modalRemover')">&times;</button>
+    <h2>Remover carro</h2>
+    <p style="font-size:13px;color:var(--texto-suave);margin-bottom:14px;">
+      Essa ação apaga o carro definitivamente, junto com seu histórico e pendências. Confirme com usuário e senha.
+    </p>
+    <div class="campo"><label>Usuário</label><input type="text" id="removerUsuario"></div>
+    <div class="campo"><label>Senha</label><input type="password" id="removerSenha"></div>
+    <div class="erro-login" id="erroRemover"></div>
+    <button class="acao perigo" style="width:100%;margin-top:6px;" onclick="confirmarRemocao()">Confirmar remoção</button>
   </div>
 </div>
 
@@ -533,6 +552,31 @@ async function confirmarVenda(){
   fecharModal('modalVenda');
   fecharModal('modalFicha');
   mostrarToast('Carro Marcado como Vendido.');
+  carregarCarros();
+}
+
+// ---------- remover carro ----------
+function abrirModalRemover(){
+  document.getElementById('removerUsuario').value = '';
+  document.getElementById('removerSenha').value = '';
+  document.getElementById('erroRemover').style.display = 'none';
+  abrirModal('modalRemover');
+}
+async function confirmarRemocao(){
+  const usuario = document.getElementById('removerUsuario').value.trim();
+  const senha = document.getElementById('removerSenha').value;
+  const erroEl = document.getElementById('erroRemover');
+  erroEl.style.display = 'none';
+
+  const resultado = await chamarApiPost({action:'removerCarro', chassi: chassiAtual, usuario, senha});
+  if(resultado.erro){
+    erroEl.textContent = resultado.erro;
+    erroEl.style.display = 'block';
+    return;
+  }
+  fecharModal('modalRemover');
+  fecharModal('modalFicha');
+  mostrarToast('Carro removido.');
   carregarCarros();
 }
 
