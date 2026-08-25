@@ -575,10 +575,11 @@
 
         <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
 
-        <label class="filtro-atraso">
+       <label class="filtro-atraso">
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
         <button class="acao" id="btnNovoCarro">+ Novo Carro</button>
+        <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
       </div>
       <div id="listaCarros" class="grid-carros"></div>
       <div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 12px; color: var(--texto-suave);">
@@ -871,6 +872,18 @@
       }
     }
 
+    async function rodarSincronizacao() {
+      mostrarToast('Sincronizando com a planilha ERP...');
+      const resultado = await chamarApiPost({ action: 'sincronizar' });
+      
+      if(resultado.erro) {
+        mostrarToast('Erro: ' + resultado.erro);
+      } else {
+        mostrarToast(resultado.carrosAdicionados + ' carros novos importados!');
+        carregarCarros(); // Recarrega a tela para mostrar os carros novos
+      }
+    }
+
     function renderizarLista() {
       const busca = document.getElementById('busca').value.trim().toLowerCase();
       const soAtraso = document.getElementById('filtroAtraso').checked;
@@ -880,7 +893,7 @@
       let filtrados = carrosCache.filter(c => {
         const textoGeral = ((c.Chassi || '') + ' ' + (c.Modelo || '') + ' ' + (c.Cor || '')).toLowerCase();
         const passaBusca = textoGeral.includes(busca);
-        const passaModelo = filtroModelo === '' || (c.Modelo || '').toLowerCase() === filtroModelo;
+        const passaModelo = filtroModelo === '' || (c.Modelo || '').toLowerCase().includes(filtroModelo);
         const passaCor = filtroCor === '' || (c.Cor || '').toLowerCase().includes(filtroCor);
         return passaBusca && passaModelo && passaCor;
       });
