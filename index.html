@@ -758,6 +758,18 @@
       'omoda 4': 'omoda-4.png'
     };
 
+    function simplificarModelo(nomeCompleto) {
+      if (!nomeCompleto) return '';
+      const n = nomeCompleto.toLowerCase();
+      if (n.includes('omoda 5')) return 'Omoda 5';
+      if (n.includes('omoda 7')) return 'Omoda 7';
+      if (n.includes('omoda 4')) return 'Omoda 4';
+      if (n.includes('jaecoo 7') || n.includes('jaecoo j7') || n.includes('j7')) return 'Jaecoo 7';
+      if (n.includes('jaecoo 5')) return 'Jaecoo 5';
+      if (n.includes('jaecoo 8')) return 'Jaecoo 8';
+      return nomeCompleto; 
+    }
+
     function obterCaminhoImagem(modelo) {
       if (!modelo) return '';
       const key = modelo.trim().toLowerCase();
@@ -909,14 +921,16 @@
         return;
       }
       
-      cont.innerHTML = filtrados.map(c => {
-        const imgPath = obterCaminhoImagem(c.Modelo);
-        const tagImg = imgPath ? `<img class="card-img-modelo" src="${imgPath}" alt="${c.Modelo}" onerror="this.style.display='none'">` : '';
+ cont.innerHTML = filtrados.map(c => {
+        const modeloSimples = simplificarModelo(c.Modelo);
+        const imgPath = obterCaminhoImagem(modeloSimples);
+        const tagImg = imgPath ? `<img class="card-img-modelo" src="${imgPath}" alt="${modeloSimples}" onerror="this.style.display='none'">` : '';
 
         return `
         <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
           <div class="card-info">
-            <h3>${c.Modelo}</h3>
+            <h3>${modeloSimples}</h3>
+            <p style="font-size: 11px; margin-bottom: 8px;">Versão: ${c.Modelo}</p>
             <p>Chassi: ${c.Chassi}</p>
             <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
             <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">
@@ -958,7 +972,7 @@
       renderizarLista();
     }
 
-    // ---------- ficha do carro ----------
+// ---------- ficha do carro ----------
     async function abrirFicha(chassi) {
       chassiAtual = chassi;
       abrirModal('modalFicha');
@@ -975,13 +989,15 @@
       const c = dados.carro;
       carroAtualVendido = !!dados.vendido;
       
-      document.getElementById('fichaTitulo').textContent = `${c.Modelo} — ${c.Chassi}`;
+      const modeloSimples = simplificarModelo(c.Modelo);
+      document.getElementById('fichaTitulo').textContent = `${modeloSimples} — ${c.Chassi}`;
+      
       document.getElementById('avisoVendido').style.display = carroAtualVendido ? 'block' : 'none';
       document.getElementById('acoesFicha').style.display = carroAtualVendido ? 'none' : 'flex';
       document.getElementById('formHistorico').style.display = carroAtualVendido ? 'none' : 'flex';
       document.getElementById('formPendencias').style.display = carroAtualVendido ? 'none' : 'block';
 
-      const imgPath = obterCaminhoImagem(c.Modelo);
+      const imgPath = obterCaminhoImagem(modeloSimples);
       const imgElement = document.getElementById('fichaImgModelo');
       if (imgPath) {
         imgElement.src = imgPath;
@@ -1003,6 +1019,7 @@
       }
       
       document.getElementById('fichaDados').innerHTML = `
+        <p><b>Versão:</b> ${c.Modelo}</p>
         <p><b>Cor:</b> ${c.Cor} &nbsp; <b>Ano:</b> ${c.Ano || '-'}</p>
         <p style="margin-top:8px;"><b>Entrada no estoque:</b> ${c.DataEntrada}</p>
         ${infoInspecao}
