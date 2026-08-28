@@ -10,549 +10,590 @@
 
   <style>
     :root {
-      --primary: #111111;
-      --primary-2: #2b2b2b;
-      --accent: #D20A11;
+      --primary: #111111; 
+      --primary-2: #2b2b2b; 
+      --accent: #D20A11; 
       --accent-esc: #a0070c;
-      --prata: #e5e7eb;
-      --bg: #f4f4f5;
-      --branco: #ffffff;
+      --prata: #e5e7eb; 
+      --bg: #f4f4f5; 
+      --branco: #ffffff; 
       --texto: #1a1a1a;
-      --texto-suave: #6b7280;
-      --borda: #d1d5db;
-      --vermelho: #D20A11;
+      --texto-suave: #6b7280; 
+      --borda: #d1d5db; 
+      --vermelho: #D20A11; 
       --cinza: #4b5563;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
     }
 
-    body {
-      background: var(--bg);
-      color: var(--texto);
-      font-family: 'Montserrat', sans-serif;
+    body { 
+      background: var(--bg); 
+      color: var(--texto); 
+      font-family: 'Montserrat', sans-serif; 
     }
 
-    h1, h2, h3, .badge, button, th {
-      font-family: 'Oswald', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    h1, h2, h3, .badge, button, th { 
+      font-family: 'Oswald', sans-serif; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px; 
     }
 
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 16px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      border-bottom: 4px solid var(--accent);
+    header { 
+      background: var(--primary); 
+      color: #fff; 
+      padding: 16px 28px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      border-bottom: 4px solid var(--accent); 
     }
 
-    .logos-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      cursor: pointer;
+    .logos-header { 
+      display: flex; 
+      align-items: center; 
+      gap: 20px; 
+      cursor: pointer; 
     }
 
-    .logos-header img {
-      height: 35px;
-      object-fit: contain;
+    .logos-header img { 
+      height: 35px; 
+      object-fit: contain; 
     }
 
-    nav {
-      display: flex;
-      gap: 8px;
-      align-items: center;
+    nav { 
+      display: flex; 
+      gap: 8px; 
+      align-items: center; 
     }
 
-    nav button {
-      background: transparent;
-      border: 1px solid #ffffff30;
-      color: #cbd5e1;
-      padding: 8px 20px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: .2s;
+    nav button { 
+      background: transparent; 
+      border: 1px solid #ffffff30; 
+      color: #cbd5e1; 
+      padding: 8px 16px; 
+      border-radius: 3px; 
+      cursor: pointer; 
+      font-size: 13px; 
+      font-weight: 500; 
+      transition: .2s; 
     }
 
-    nav button.ativo {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+    nav button.ativo { 
+      background: var(--accent); 
+      border-color: var(--accent); 
+      color: #fff; 
     }
 
-    nav button.sair {
-      border-color: #ffffff20;
-      color: #94a3b8;
+    nav button.sair { 
+      border-color: #ffffff20; 
+      color: #94a3b8; 
     }
 
-    main {
-      padding: 24px;
-      max-width: 1150px;
-      margin: 0 auto;
+    main { 
+      padding: 24px; 
+      max-width: 1150px; 
+      margin: 0 auto; 
     }
 
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-      align-items: center;
-      background: #fff;
-      padding: 16px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-      border: 1px solid var(--borda);
+    .toolbar { 
+      display: flex; 
+      gap: 10px; 
+      flex-wrap: wrap; 
+      margin-bottom: 24px; 
+      align-items: center; 
+      background: #fff; 
+      padding: 16px; 
+      border-radius: 4px; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04); 
+      border: 1px solid var(--borda); 
     }
 
-    input, select {
-      padding: 10px 13px;
-      border: 1px solid var(--borda);
-      border-radius: 3px;
-      font-size: 14px;
-      font-family: 'Montserrat', sans-serif;
-      background: var(--bg);
-      color: var(--texto);
+    input, select { 
+      padding: 10px 13px; 
+      border: 1px solid var(--borda); 
+      border-radius: 3px; 
+      font-size: 14px; 
+      font-family: 'Montserrat', sans-serif; 
+      background: var(--bg); 
+      color: var(--texto); 
     }
 
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary-2);
-      background: #fff;
+    input:focus, select:focus { 
+      outline: none; 
+      border-color: var(--primary-2); 
+      background: #fff; 
     }
 
-    input[type=text] {
-      flex: 1;
-      min-width: 150px;
+    input[type=text] { 
+      flex: 1; 
+      min-width: 150px; 
     }
 
-    .acao {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: .2s;
-      text-align: center;
+    .acao { 
+      display: inline-block; 
+      background: var(--primary); 
+      color: #fff; 
+      border: none; 
+      padding: 10px 20px; 
+      border-radius: 3px; 
+      cursor: pointer; 
+      font-size: 14px; 
+      font-weight: 500; 
+      transition: .2s; 
+      text-align: center; 
     }
 
-    .acao:hover {
-      background: var(--primary-2);
+    .acao:hover { 
+      background: var(--primary-2); 
     }
 
-    #btnNovoCarro {
-      background: var(--accent);
+    #btnNovoCarro { 
+      background: var(--accent); 
     }
 
-    #btnNovoCarro:hover {
-      background: var(--accent-esc);
+    #btnNovoCarro:hover { 
+      background: var(--accent-esc); 
     }
 
-    .secundario {
-      background: var(--prata);
-      color: var(--texto);
+    .secundario { 
+      background: var(--prata); 
+      color: var(--texto); 
     }
 
-    .secundario:hover {
-      background: #d1d5db;
+    .secundario:hover { 
+      background: #d1d5db; 
     }
 
-    .perigo {
-      background: var(--vermelho);
-      color: #fff;
+    .perigo { 
+      background: var(--vermelho); 
+      color: #fff; 
     }
 
-    .perigo:hover {
-      background: var(--accent-esc);
+    .perigo:hover { 
+      background: var(--accent-esc); 
     }
 
-    .grid-carros {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
+    .grid-carros { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+      gap: 16px; 
     }
 
-    .card-carro {
-      background: var(--branco);
-      border-radius: 4px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,.05);
-      cursor: pointer;
-      border-top: 4px solid var(--primary);
-      transition: all .2s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card-carro { 
+      background: var(--branco); 
+      border-radius: 4px; 
+      padding: 20px; 
+      box-shadow: 0 4px 6px rgba(0,0,0,.05); 
+      cursor: pointer; 
+      border-top: 4px solid var(--primary); 
+      transition: all .2s; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
     }
 
-    .card-carro:hover {
-      box-shadow: 0 10px 15px rgba(0,0,0,.1);
-      transform: translateY(-2px);
+    .card-carro:hover { 
+      box-shadow: 0 10px 15px rgba(0,0,0,.1); 
+      transform: translateY(-2px); 
     }
 
-    .card-carro.atrasado {
-      border-top-color: var(--vermelho);
+    .card-carro.atrasado { 
+      border-top-color: var(--vermelho); 
     }
 
-    .card-carro.vendido-card {
-      border-top-color: var(--cinza);
-      opacity: 0.8;
+    .card-carro.vendido-card { 
+      border-top-color: var(--cinza); 
+      opacity: 0.8; 
     }
 
-    .card-info {
-      flex: 1;
+    .card-info { 
+      flex: 1; 
     }
 
-    .card-img-modelo {
-      width: 120px;
-      height: 80px;
-      object-fit: contain;
-      margin-left: 15px;
+    .card-img-modelo { 
+      width: 120px; 
+      height: 80px; 
+      object-fit: contain; 
+      margin-left: 15px; 
     }
 
-    .card-carro h3 {
-      font-size: 18px;
-      margin-bottom: 2px;
-      color: var(--primary);
+    .card-carro h3 { 
+      font-size: 18px; 
+      margin-bottom: 2px; 
+      color: var(--primary); 
     }
 
-    .card-carro p {
-      font-size: 13px;
-      color: var(--texto-suave);
-      margin: 4px 0;
-      font-weight: 500;
+    .card-carro p { 
+      font-size: 13px; 
+      color: var(--texto-suave); 
+      margin: 4px 0; 
+      font-weight: 500; 
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 2px;
-      color: #fff;
-      margin-top: 10px;
+    .badge { 
+      display: inline-block; 
+      font-size: 11px; 
+      font-weight: 500; 
+      padding: 4px 10px; 
+      border-radius: 2px; 
+      color: #fff; 
+      margin-top: 10px; 
     }
 
-    .badge.ok {
-      background: var(--primary-2);
+    .badge.ok { 
+      background: var(--primary-2); 
     }
 
-    .badge.atraso {
-      background: var(--vermelho);
+    .badge.atraso { 
+      background: var(--vermelho); 
     }
 
-    .modal-fundo {
-      position: fixed;
-      inset: 0;
-      background: rgba(17, 17, 17, 0.85);
-      display: none;
-      align-items: flex-start;
-      justify-content: center;
-      overflow-y: auto;
-      padding: 40px 12px;
-      z-index: 50;
+    .modal-fundo { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(17, 17, 17, 0.85); 
+      display: none; 
+      align-items: flex-start; 
+      justify-content: center; 
+      overflow-y: auto; 
+      padding: 40px 12px; 
+      z-index: 50; 
     }
 
-    .modal-fundo.aberto {
-      display: flex;
+    .modal-fundo.aberto { 
+      display: flex; 
     }
 
-    .modal {
-      background: #fff;
-      border-radius: 4px;
-      max-width: 680px;
-      width: 100%;
-      padding: 32px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    .modal { 
+      background: #fff; 
+      border-radius: 4px; 
+      max-width: 680px; 
+      width: 100%; 
+      padding: 32px; 
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
     }
 
-    .modal h2 {
-      margin-bottom: 20px;
-      color: var(--primary);
-      font-size: 22px;
-      border-bottom: 2px solid var(--prata);
-      padding-bottom: 10px;
+    .modal h2 { 
+      margin-bottom: 20px; 
+      color: var(--primary); 
+      font-size: 22px; 
+      border-bottom: 2px solid var(--prata); 
+      padding-bottom: 10px; 
     }
 
-    .campo {
-      margin-bottom: 16px;
+    .campo { 
+      margin-bottom: 16px; 
     }
 
-    .campo label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--texto-suave);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .campo label { 
+      display: block; 
+      font-size: 12px; 
+      font-weight: 600; 
+      margin-bottom: 6px; 
+      color: var(--texto-suave); 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px; 
     }
 
-    .campo input, .campo select {
-      width: 100%;
+    .campo input, .campo select { 
+      width: 100%; 
     }
 
-    .linha-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .linha-2 { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 16px; 
     }
 
-    .fechar {
-      float: right;
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--texto-suave);
-      line-height: 1;
-      transition: .2s;
+    .fechar { 
+      float: right; 
+      background: none; 
+      border: none; 
+      font-size: 28px; 
+      cursor: pointer; 
+      color: var(--texto-suave); 
+      line-height: 1; 
+      transition: .2s; 
     }
 
-    .fechar:hover {
-      color: var(--vermelho);
+    .fechar:hover { 
+      color: var(--vermelho); 
     }
 
-    .tabs {
-      display: flex;
-      gap: 4px;
-      margin: 24px 0 16px;
-      border-bottom: 2px solid var(--prata);
+    .tabs { 
+      display: flex; 
+      gap: 4px; 
+      margin: 24px 0 16px; 
+      border-bottom: 2px solid var(--prata); 
     }
 
-    .tabs button {
-      background: none;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--texto-suave);
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
+    .tabs button { 
+      background: none; 
+      border: none; 
+      padding: 10px 20px; 
+      cursor: pointer; 
+      font-size: 14px; 
+      color: var(--texto-suave); 
+      border-bottom: 3px solid transparent; 
+      margin-bottom: -2px; 
     }
 
-    .tabs button.ativo {
-      color: var(--primary);
-      border-color: var(--primary);
+    .tabs button.ativo { 
+      color: var(--primary); 
+      border-color: var(--primary); 
     }
 
-    .item-historico, .item-pendencia {
-      background: var(--bg);
-      border-radius: 3px;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--borda);
+    .item-historico, .item-pendencia { 
+      background: var(--bg); 
+      border-radius: 3px; 
+      padding: 12px 16px; 
+      margin-bottom: 8px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 10px; 
+      border: 1px solid var(--borda); 
     }
 
-    .item-pendencia.concluida {
-      opacity: .5;
-      text-decoration: line-through;
+    .item-pendencia.concluida { 
+      opacity: .5; 
+      text-decoration: line-through; 
     }
 
-    .fotos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 10px;
-      margin-top: 14px;
+    .fotos-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+      gap: 10px; 
+      margin-top: 14px; 
     }
 
-    .fotos-grid img {
-      width: 100%;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 3px;
-      cursor: pointer;
-      border: 1px solid var(--borda);
+    .fotos-grid img { 
+      width: 100%; 
+      height: 90px; 
+      object-fit: cover; 
+      border-radius: 3px; 
+      cursor: pointer; 
+      border: 1px solid var(--borda); 
     }
 
-    .carregando {
-      text-align: center;
-      color: var(--texto-suave);
-      padding: 40px;
-      font-weight: 500;
+    .carregando { 
+      text-align: center; 
+      color: var(--texto-suave); 
+      padding: 40px; 
+      font-weight: 500; 
     }
 
-    .vazio {
-      text-align: center;
-      color: var(--texto-suave);
-      padding: 30px;
-      font-style: italic;
+    .vazio { 
+      text-align: center; 
+      color: var(--texto-suave); 
+      padding: 30px; 
+      font-style: italic; 
     }
 
-    .filtro-atraso {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--texto);
-      cursor: pointer;
-      font-weight: 600;
+    .filtro-atraso { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      font-size: 13px; 
+      color: var(--texto); 
+      cursor: pointer; 
+      font-weight: 600; 
     }
 
-    .checklist {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
+    .checklist { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 10px; 
+      margin-bottom: 16px; 
     }
 
-    .checklist label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      background: var(--bg);
-      padding: 10px 14px;
-      border-radius: 3px;
-      border: 1px solid var(--borda);
-      cursor: pointer;
-      font-weight: 500;
+    .checklist label { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      font-size: 14px; 
+      background: var(--bg); 
+      padding: 10px 14px; 
+      border-radius: 3px; 
+      border: 1px solid var(--borda); 
+      cursor: pointer; 
+      font-weight: 500; 
     }
 
-    .checklist input {
-      width: auto;
+    .checklist input { 
+      width: auto; 
     }
 
-    .aviso-vendido {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: var(--vermelho);
-      padding: 12px 16px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 16px;
+    .aviso-vendido { 
+      background: #fef2f2; 
+      border: 1px solid #fecaca; 
+      color: var(--vermelho); 
+      padding: 12px 16px; 
+      border-radius: 4px; 
+      font-size: 14px; 
+      font-weight: 600; 
+      margin-bottom: 16px; 
     }
 
-    /* Login */
-    #telaLogin {
-      position: fixed;
-      inset: 0;
-      background: var(--primary-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
+    /* Login e Escolha de Marca */
+    #telaLogin, #telaMarca { 
+      position: fixed; 
+      inset: 0; 
+      background: var(--primary-2); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 200; 
+      flex-direction: column; 
     }
 
-    .caixa-login {
-      background: #fff;
-      border-radius: 4px;
-      padding: 40px 32px;
-      width: 100%;
-      max-width: 380px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
-      border-top: 5px solid var(--accent);
+    .caixa-login { 
+      background: #fff; 
+      border-radius: 4px; 
+      padding: 40px 32px; 
+      width: 100%; 
+      max-width: 380px; 
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .4); 
+      border-top: 5px solid var(--accent); 
     }
 
-    .caixa-login img {
-      width: 140px;
-      margin-bottom: 20px;
+    .caixa-login img { 
+      width: 140px; 
+      margin-bottom: 20px; 
     }
 
-    .caixa-login h2 {
-      color: var(--primary);
-      margin-bottom: 4px;
-      font-size: 24px;
-      border: none;
-      padding: 0;
+    .caixa-login h2 { 
+      color: var(--primary); 
+      margin-bottom: 4px; 
+      font-size: 24px; 
+      border: none; 
+      padding: 0; 
     }
 
-    .caixa-login p {
-      color: var(--texto-suave);
-      font-size: 13px;
-      margin-bottom: 24px;
-      font-weight: 500;
+    .caixa-login p { 
+      color: var(--texto-suave); 
+      font-size: 13px; 
+      margin-bottom: 24px; 
+      font-weight: 500; 
     }
 
-    .caixa-login .campo {
-      margin-bottom: 14px;
+    .caixa-login button { 
+      width: 100%; 
+      margin-top: 10px; 
+      font-size: 16px; 
+      padding: 12px; 
     }
 
-    .caixa-login button {
-      width: 100%;
-      margin-top: 10px;
-      font-size: 16px;
-      padding: 12px;
+    .erro-login { 
+      color: var(--vermelho); 
+      font-size: 13px; 
+      font-weight: 600; 
+      margin-top: 12px; 
+      display: none; 
+      text-align: center; 
     }
 
-    .erro-login {
-      color: var(--vermelho);
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 12px;
-      display: none;
-      text-align: center;
+    /* Estilos Tela de Marcas */
+    #telaMarca { 
+      z-index: 150; 
+      display: none; 
+    }
+
+    .caixa-marcas { 
+      display: flex; 
+      gap: 24px; 
+      margin-top: 24px; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+    }
+
+    .btn-marca { 
+      background: #fff; 
+      border: none; 
+      border-radius: 8px; 
+      padding: 40px; 
+      cursor: pointer; 
+      transition: 0.2s; 
+      text-align: center; 
+      width: 260px; 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+      border-bottom: 6px solid transparent; 
+    }
+
+    .btn-marca:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25); 
+      border-bottom-color: var(--accent); 
+    }
+
+    .btn-marca h3 { 
+      color: var(--primary); 
+      font-size: 24px; 
+      margin-top: 10px; 
+    }
+
+    .titulo-marcas { 
+      color: #fff; 
+      font-size: 32px; 
+      font-family: 'Oswald'; 
+      letter-spacing: 1px; 
     }
 
     /* Overlay Loading */
-    #loadingOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(17,17,17,0.85);
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    #loadingOverlay { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(17,17,17,0.85); 
+      z-index: 9999; 
+      display: none; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
     }
 
-    .spinner {
-      width: 45px;
-      height: 45px;
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top-color: var(--vermelho);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
+    .spinner { 
+      width: 45px; 
+      height: 45px; 
+      border: 4px solid rgba(255,255,255,0.2); 
+      border-top-color: var(--vermelho); 
+      border-radius: 50%; 
+      animation: spin 1s linear infinite; 
+      margin-bottom: 15px; 
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
     }
 
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--primary);
-      color: #fff;
-      padding: 16px 24px;
-      border-radius: 4px;
-      display: none;
-      z-index: 10000;
-      font-size: 14px;
-      font-weight: 500;
-      box-shadow: 0 10px 15px rgba(0, 0, 0, .2);
-      border-left: 4px solid var(--accent);
+    .toast { 
+      position: fixed; 
+      bottom: 24px; 
+      right: 24px; 
+      background: var(--primary); 
+      color: #fff; 
+      padding: 16px 24px; 
+      border-radius: 4px; 
+      display: none; 
+      z-index: 10000; 
+      font-size: 14px; 
+      font-weight: 500; 
+      box-shadow: 0 10px 15px rgba(0, 0, 0, .2); 
+      border-left: 4px solid var(--accent); 
     }
 
-    .toast.mostrar {
-      display: block;
+    .toast.mostrar { 
+      display: block; 
     }
 
-    /* Restrição Leitura */
-    body.modo-leitura .restrito,
-    body.modo-leitura #btnNovoCarro,
-    body.modo-leitura #btnSincronizar {
-      display: none !important;
+    /* Ocultar elementos restritos no modo leitura dinâmico */
+    .modo-leitura .restrito { 
+      display: none !important; 
     }
   </style>
 </head>
@@ -564,11 +605,12 @@
     <h3 id="loadingText" style="color:#fff;">PROCESSANDO...</h3>
   </div>
 
+  <!-- TELA DE LOGIN -->
   <div id="telaLogin">
     <div class="caixa-login">
       <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
-      <h2>Estoque de Carros</h2>
-      <p>Acesso à equipe Omoda & Jaecoo</p>
+      <h2>Sistema de Estoque</h2>
+      <p>Acesso restrito à equipe do Grupo Cobel</p>
       <div class="campo">
         <label>Usuário</label>
         <input type="text" id="loginUsuario">
@@ -582,15 +624,32 @@
     </div>
   </div>
 
+  <!-- TELA DE ESCOLHA DE MARCA -->
+  <div id="telaMarca">
+    <div class="titulo-marcas">SELECIONE A GARAGEM</div>
+    <div class="caixa-marcas">
+      <button class="btn-marca" onclick="escolherMarca('oj')">
+        <img src="logo-oj.png" alt="Omoda & Jaecoo" style="height:40px; margin-bottom:10px;" onerror="this.style.display='none'">
+        <h3>Omoda / Jaecoo</h3>
+      </button>
+      <button class="btn-marca" onclick="escolherMarca('jetour')">
+        <!-- Opcional: Adicione a logo da Jetour aqui se tiver -->
+        <img src="logo-jetour.png" alt="Jetour" style="height:40px; margin-bottom:10px;" onerror="this.style.display='none'">
+        <h3>Jetour</h3>
+      </button>
+    </div>
+  </div>
+
   <div id="app" style="display:none;">
     <header>
       <div class="logos-header" onclick="comandoSecreto()">
-        <img src="logo-cobel2.png" alt="Cobel" onerror="this.style.display='none'">
-        <img src="logo-oj.png" alt="Omoda & Jaecoo" onerror="this.style.display='none'">
+        <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
+        <img id="logoAtiva" src="" alt="Marca" onerror="this.style.display='none'">
       </div>
       <nav>
         <button id="tabEstoque" class="ativo">Estoque</button>
         <button id="tabVendidos">Vendidos</button>
+        <button class="sair" style="color:var(--branco); border-color:var(--branco);" onclick="abrirTelaMarcas()">Trocar Marca</button>
         <button class="sair" onclick="sair()">Sair</button>
       </nav>
     </header>
@@ -606,26 +665,32 @@
           <option value="omoda 5">Omoda 5</option>
           <option value="omoda 7">Omoda 7</option>
           <option value="omoda 4">Omoda 4</option>
+          <option value="jetour dashing">Jetour Dashing</option>
+          <option value="jetour x70">Jetour X70</option>
         </select>
         <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
         <label class="filtro-atraso">
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
-        <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Carro</button>
-        <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
+        
+        <!-- Botões que somem se for modo leitura -->
+        <div class="restrito" style="display:inline-flex; gap:10px;">
+          <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Veículo</button>
+          <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">🔄 Sincronizar ERP</button>
+        </div>
       </div>
       
       <div id="listaCarros" class="grid-carros"></div>
       
       <div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 12px; color: var(--texto-suave);">
-        Desenvolvido por <b>André Litvay - Cobel O&J</b>
+        Desenvolvido por <b>André Litvay - Cobel</b>
       </div>
     </main>
   </div>
 
   <!-- MODAL: FICHA DO CARRO -->
   <div class="modal-fundo" id="modalFicha">
-    <div class="modal" style="max-width:720px;">
+    <div class="modal" id="modalFichaContent" style="max-width:720px;">
       <button class="fechar" onclick="fecharModal('modalFicha')">&times;</button>
       <h2 id="fichaTitulo">Carro</h2>
       <div id="avisoVendido" class="aviso-vendido" style="display:none;">Este carro já foi vendido. Apenas Consulta.</div>
@@ -699,15 +764,7 @@
       <div class="linha-2">
         <div class="campo">
           <label>Modelo *</label>
-          <select id="novoModelo">
-            <option value="">Selecione...</option>
-            <option value="Jaecoo 7">Jaecoo 7</option>
-            <option value="Jaecoo 5">Jaecoo 5</option>
-            <option value="Jaecoo 8">Jaecoo 8</option>
-            <option value="Omoda 5">Omoda 5</option>
-            <option value="Omoda 7">Omoda 7</option>
-            <option value="Omoda 4">Omoda 4</option>
-          </select>
+          <input type="text" id="novoModelo" placeholder="Ex: Jetour Dashing, Omoda 5...">
         </div>
         <div class="campo">
           <label>Cor *</label>
@@ -735,7 +792,7 @@
         <label>Data</label>
         <input type="date" id="dataVenda">
       </div>
-      <button class="acao perigo" style="width:100%;" onclick="confirmarVenda()">Confirmar</button>
+      <button class="acao perigo" style="width:100%;margin-top:10px;" onclick="confirmarVenda()">Confirmar</button>
     </div>
   </div>
 
@@ -753,7 +810,7 @@
         <input type="password" id="removerSenha">
       </div>
       <div class="erro-login" id="erroRemover"></div>
-      <button class="acao perigo" style="width:100%;" onclick="confirmarRemocao()">Confirmar</button>
+      <button class="acao perigo" style="width:100%;margin-top:10px;" onclick="confirmarRemocao()">Confirmar</button>
     </div>
   </div>
 
@@ -763,62 +820,71 @@
     console.log('%c Sistema desenvolvido por André Litvay', 'color: #D20A11; font-weight: bold; font-size: 14px;');
     
     const API_URL = 'https://script.google.com/macros/s/AKfycbxFoyDfZGKndTUnJgOJHthfON1CRjc1FEb5Im0R-2VLOa9GGnRu8V6BZZDqVEUtWvNy/exec';
+    
     const SERVICOS_PADRAO = [
-      'Vitrificação',
-      'Película',
-      'Martelinho de Ouro',
-      'Funilaria',
-      'Película de Proteção',
-      'Insulfilm',
+      'Vitrificação', 
+      'Película', 
+      'Martelinho de Ouro', 
+      'Funilaria', 
+      'Película de Proteção', 
+      'Insulfilm', 
       'Envelopamento'
     ];
+    
     const IMAGENS_MODELOS = {
-      'jaecoo 7': 'jaecoo-7.png',
-      'jaecoo 5': 'jaecoo-5.png',
+      'jaecoo 7': 'jaecoo-7.png', 
+      'jaecoo 5': 'jaecoo-5.png', 
       'jaecoo 8': 'jaecoo-8.png',
-      'omoda 5': 'omoda-5.png',
-      'omoda 7': 'omoda-7.png',
-      'omoda 4': 'omoda-4.png'
+      'omoda 5': 'omoda-5.png', 
+      'omoda 7': 'omoda-7.png', 
+      'omoda 4': 'omoda-4.png',
+      'jetour dashing': 'jetour-dashing.png', 
+      'jetour x70': 'jetour-x70.png'
     };
     
     let carrosCache = [];
     let chassiAtual = null;
     let carroAtualVendido = false;
     let clickCobel = 0;
+    let marcaAtual = ''; // Pode ser 'oj' ou 'jetour'
 
     function mostrarLoading(texto = 'PROCESSANDO...') { 
       document.getElementById('loadingText').textContent = texto; 
       document.getElementById('loadingOverlay').style.display = 'flex'; 
     }
-    
+
     function esconderLoading() { 
       document.getElementById('loadingOverlay').style.display = 'none'; 
     }
-    
+
     function mostrarToast(msg) { 
       const t = document.getElementById('toast'); 
       t.textContent = msg; 
       t.classList.add('mostrar'); 
       setTimeout(() => t.classList.remove('mostrar'), 3000); 
     }
-    
+
     function abrirModal(id) { 
       document.getElementById(id).classList.add('aberto'); 
     }
-    
+
     function fecharModal(id) { 
       document.getElementById(id).classList.remove('aberto'); 
     }
     
     function simplificarModelo(nome) { 
-      if(!nome) return ''; 
+      if (!nome) return ''; 
+      
       const n = nome.toLowerCase(); 
-      if(n.includes('omoda 4')) return 'Omoda 4'; 
-      if(n.includes('omoda 5')) return 'Omoda 5'; 
-      if(n.includes('omoda 7')) return 'Omoda 7';
-      if(n.includes('jaecoo 5')) return 'Jaecoo 5';
-      if(n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7';
-      if(n.includes('jaecoo 8')) return 'Jaecoo 8';
+      if (n.includes('omoda 5')) return 'Omoda 5'; 
+      if (n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7'; 
+      if (n.includes('jaecoo 5')) return 'Jaecoo 5'; 
+      
+      // Jetour extrações
+      if (n.includes('dashing')) return 'Jetour Dashing';
+      if (n.includes('x70')) return 'Jetour X70';
+      if (n.includes('jetour')) return 'Jetour'; 
+      
       return nome; 
     }
     
@@ -828,17 +894,22 @@
 
     async function chamarApi(params) { 
       mostrarLoading('Sincronizando Banco de Dados...'); 
-      const resp = await fetch(API_URL + '?' + new URLSearchParams(params).toString()); 
+      
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      const resp = await fetch(url); 
+      
       esconderLoading(); 
       return resp.json(); 
     }
-    
+
     async function chamarApiPost(corpo) { 
       mostrarLoading('Atualizando Informações...'); 
+      
       const resp = await fetch(API_URL, { 
         method: 'POST', 
         body: JSON.stringify(corpo) 
       }); 
+      
       esconderLoading(); 
       return resp.json(); 
     }
@@ -858,10 +929,11 @@
       .then(r => r.json())
       .then(d => {
         esconderLoading();
-        if(d.sucesso) { 
+        
+        if (d.sucesso) { 
           localStorage.setItem('cobel_autenticado', '1'); 
           localStorage.setItem('cobel_role', d.role); 
-          mostrarApp(); 
+          abrirTelaMarcas(); 
         } else { 
           e.textContent = d.erro; 
           e.style.display = 'block'; 
@@ -879,33 +951,68 @@
       location.reload(); 
     }
 
-    function mostrarApp() { 
-      document.getElementById('telaLogin').style.display = 'none'; 
-      document.getElementById('app').style.display = 'block'; 
-      
-      if(localStorage.getItem('cobel_role') === 'viewer') {
-        document.body.classList.add('modo-leitura');
-      }
-      
-      montarChecklist(); 
-      carregarCarros(); 
+    function abrirTelaMarcas() {
+      document.getElementById('telaLogin').style.display = 'none';
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('telaMarca').style.display = 'flex';
     }
 
-    if(localStorage.getItem('cobel_autenticado') === '1') {
-      mostrarApp();
+    if (localStorage.getItem('cobel_autenticado') === '1') { 
+      abrirTelaMarcas(); 
+    }
+
+    function escolherMarca(marcaSelecionada) {
+      marcaAtual = marcaSelecionada;
+      document.getElementById('telaMarca').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      
+      // Atualiza o logo no cabeçalho de acordo com a marca
+      const imgLogo = document.getElementById('logoAtiva');
+      imgLogo.src = marcaAtual === 'oj' ? 'logo-oj.png' : 'logo-jetour.png';
+      
+      aplicarPermissoesDeMarca();
+      montarChecklist(); 
+      carregarCarros();
+    }
+
+    // Calcula se o usuário tem permissão para editar os dados do estoque atual
+    function usuarioPodeEditar() {
+      const role = localStorage.getItem('cobel_role');
+      if (role === 'admin') return true;
+      if (role === marcaAtual) return true;
+      
+      return false;
+    }
+
+    // Oculta "Novo Carro" e "Sincronizar" se for apenas visualizador do estoque atual
+    function aplicarPermissoesDeMarca() {
+      if (usuarioPodeEditar()) {
+        document.body.classList.remove('modo-leitura');
+      } else {
+        document.body.classList.add('modo-leitura');
+      }
     }
 
     function montarChecklist() { 
-      document.getElementById('checklistServicos').innerHTML = SERVICOS_PADRAO.map(s => `
+      const checklistHTML = SERVICOS_PADRAO.map(s => `
         <label>
           <input type="checkbox" class="chk-servico" value="${s}" onchange="verificarMartelinho()">
           ${s}
         </label>
-      `).join(''); 
+      `).join('');
+      
+      document.getElementById('checklistServicos').innerHTML = checklistHTML; 
     }
 
     function verificarMartelinho() { 
-      document.getElementById('campoLocalMartelinho').style.display = Array.from(document.querySelectorAll('.chk-servico')).some(c => c.checked && c.value.includes('Martelinho')) ? 'block' : 'none'; 
+      const servicos = Array.from(document.querySelectorAll('.chk-servico'));
+      const temMartelinho = servicos.some(c => c.checked && c.value.includes('Martelinho'));
+      
+      if (temMartelinho) {
+        document.getElementById('campoLocalMartelinho').style.display = 'block';
+      } else {
+        document.getElementById('campoLocalMartelinho').style.display = 'none';
+      }
     }
 
     async function carregarCarros() { 
@@ -913,7 +1020,9 @@
         const d = await chamarApi({ action: 'listarCarros' }); 
         carrosCache = d.carros || []; 
         renderizarLista(); 
-      } catch(e) {} 
+      } catch(e) {
+        console.error("Erro ao carregar carros", e);
+      } 
     }
 
     function renderizarLista() {
@@ -923,33 +1032,50 @@
       const fc = document.getElementById('filtroCor').value.toLowerCase();
       
       let f = carrosCache.filter(c => { 
+        const modText = (c.Modelo || '').toLowerCase();
+        
+        // Filtro Inteligente de Marca
+        const isJetour = modText.includes('jetour') || modText.includes('dashing') || modText.includes('x70');
+        
+        if (marcaAtual === 'oj' && isJetour) return false;
+        if (marcaAtual === 'jetour' && !isJetour) return false;
+
         const t = c.Chassi + c.Modelo + c.Cor; 
+        
         return t.toLowerCase().includes(b) && 
-               (fm === '' || (c.Modelo || '').toLowerCase().includes(fm)) && 
+               (fm === '' || modText.includes(fm)) && 
                (fc === '' || (c.Cor || '').toLowerCase().includes(fc)); 
       });
       
-      if(soA) {
+      if (soA) {
         f = f.filter(c => c.inspecaoAtrasada);
       }
       
-      document.getElementById('listaCarros').innerHTML = f.length ? f.map(c => {
-        const m = simplificarModelo(c.Modelo);
-        const i = obterCaminhoImagem(m);
-        return `
-          <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
-            <div class="card-info">
-              <h3>${m}</h3>
-              <p style="font-size:11px;margin-bottom:8px">Versão: ${c.Modelo}</p>
-              <p>Chassi: ${c.Chassi}</p>
-              <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
-              <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">
-                ${c.inspecaoAtrasada ? 'Atrasada (' + c.diasDesdeInspecao + 'd)' : 'Em Dia'}
-              </span>
-            </div>
-            ${i ? `<img class="card-img-modelo" src="${i}">` : ''}
-          </div>`;
-      }).join('') : '<div class="vazio">Nenhum carro encontrado.</div>';
+      if (f.length > 0) {
+        const cardsHTML = f.map(c => {
+          const m = simplificarModelo(c.Modelo);
+          const i = obterCaminhoImagem(m);
+          
+          let atrasoTexto = c.inspecaoAtrasada ? `Atrasada (${c.diasDesdeInspecao}d)` : 'Em Dia';
+          let imgTag = i ? `<img class="card-img-modelo" src="${i}" onerror="this.style.display='none'">` : '';
+          
+          return `
+            <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
+              <div class="card-info">
+                <h3>${m}</h3>
+                <p style="font-size:11px;margin-bottom:8px">Versão: ${c.Modelo}</p>
+                <p>Chassi: ${c.Chassi}</p>
+                <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
+                <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">${atrasoTexto}</span>
+              </div>
+              ${imgTag}
+            </div>`;
+        }).join('');
+        
+        document.getElementById('listaCarros').innerHTML = cardsHTML;
+      } else {
+        document.getElementById('listaCarros').innerHTML = '<div class="vazio">Nenhum carro encontrado.</div>';
+      }
     }
 
     document.getElementById('busca').addEventListener('input', renderizarLista); 
@@ -966,6 +1092,7 @@
     document.getElementById('tabVendidos').addEventListener('click', async () => { 
       document.getElementById('tabVendidos').classList.add('ativo'); 
       document.getElementById('tabEstoque').classList.remove('ativo'); 
+      
       const d = await chamarApi({ action: 'listarVendidos' }); 
       carrosCache = d.vendidos || []; 
       renderizarLista(); 
@@ -973,19 +1100,20 @@
 
     async function rodarSincronizacao() { 
       const r = await chamarApiPost({ action: 'sincronizar' }); 
-      if(r.erro) {
+      
+      if (r.erro) {
         mostrarToast(r.erro); 
       } else { 
-        mostrarToast(r.carrosAdicionados + ' carros novos!'); 
+        mostrarToast(r.carrosAdicionados + ' carros importados!'); 
         carregarCarros(); 
       } 
     }
 
     function comandoSecreto() {
       clickCobel++;
-      if(clickCobel >= 5) {
+      if (clickCobel >= 5) {
         clickCobel = 0;
-        if(confirm('MODO ADMIN: Deseja apagar todo estoque atual e recriar sincronizando do zero com a aba ERP?')) {
+        if (confirm('⚠️ MODO ADMIN: Deseja apagar o estoque atual e recriar sincronizando do zero com a aba ERP?')) {
           resetTudo();
         }
       }
@@ -993,8 +1121,8 @@
     }
 
     async function resetTudo() { 
-      const r = await chamarApiPost({action: 'resetSync'}); 
-      if(!r.erro) { 
+      const r = await chamarApiPost({ action: 'resetSync' }); 
+      if (!r.erro) { 
         mostrarToast('Estoque formatado!'); 
         carregarCarros(); 
       } 
@@ -1005,7 +1133,7 @@
       abrirModal('modalFicha');
       
       const d = await chamarApi({ action: 'obterCarro', chassi }); 
-      if(d.erro) {
+      if (d.erro) {
         return mostrarToast(d.erro);
       }
       
@@ -1014,55 +1142,94 @@
       const m = simplificarModelo(c.Modelo);
       
       document.getElementById('fichaTitulo').textContent = `${m} — ${c.Chassi}`;
-      document.getElementById('avisoVendido').style.display = carroAtualVendido ? 'block' : 'none';
       
-      ['acoesFicha','formHistorico','formPendencias'].forEach(id => {
-        document.getElementById(id).style.display = carroAtualVendido ? 'none' : 'flex';
-      });
+      if (carroAtualVendido) {
+        document.getElementById('avisoVendido').style.display = 'block';
+      } else {
+        document.getElementById('avisoVendido').style.display = 'none';
+      }
+      
+      // Controle de leitura dinâmico para a ficha
+      if (!usuarioPodeEditar() || carroAtualVendido) {
+        document.getElementById('modalFichaContent').classList.add('modo-leitura');
+      } else {
+        document.getElementById('modalFichaContent').classList.remove('modo-leitura');
+      }
       
       const img = document.getElementById('fichaImgModelo'); 
       img.src = obterCaminhoImagem(m); 
-      img.style.display = img.src ? 'block' : 'none';
+      
+      if (img.src) {
+        img.style.display = 'block';
+      } else {
+        img.style.display = 'none';
+      }
+      
+      let infoBateria = '';
+      if (!carroAtualVendido) {
+        let badgeClass = c.inspecaoAtrasada ? 'atraso' : 'ok';
+        let badgeText = c.inspecaoAtrasada ? 'Atrasada' : 'Em dia';
+        infoBateria = `
+          <p><b>Bateria:</b> ${c.DataUltimaInspecaoBateria || '-'}<br>
+          <span class="badge ${badgeClass}">${badgeText}</span></p>
+        `;
+      } else {
+        infoBateria = `<p><b>Vendido:</b> ${c.DataVenda}</p>`;
+      }
       
       document.getElementById('fichaDados').innerHTML = `
         <p><b>Versão:</b> ${c.Modelo}</p>
         <p><b>Cor:</b> ${c.Cor} · <b>Ano:</b> ${c.Ano}</p>
         <p><b>Entrada:</b> ${c.DataEntrada}</p>
-        ${!carroAtualVendido ? `
-          <p><b>Bateria:</b> ${c.DataUltimaInspecaoBateria || '-'}<br>
-          <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">${c.inspecaoAtrasada ? 'Atrasada' : 'Em dia'}</span></p>
-        ` : `
-          <p><b>Vendido:</b> ${c.DataVenda}</p>
-        `}`;
+        ${infoBateria}
+      `;
       
-      let fg = [], fa = []; 
+      let fg = [];
+      let fa = []; 
       try { 
         fg = JSON.parse(c.FotosGeraisJSON); 
         fa = JSON.parse(c.FotosAvariasJSON); 
       } catch(e) {}
       
-      document.getElementById('fichaFotosGerais').innerHTML = 
-        fg.map(u => `<img src="${u}" onclick="window.open('${u}')">`).join('') + 
-        fa.map(u => `<img src="${u}" style="border:2px solid red" onclick="window.open('${u}')">`).join('');
+      let fotosHTML = fg.map(u => `<img src="${u}" onclick="window.open('${u}')">`).join('');
+      fotosHTML += fa.map(u => `<img src="${u}" style="border:2px solid red" onclick="window.open('${u}')">`).join('');
+      document.getElementById('fichaFotosGerais').innerHTML = fotosHTML;
       
       const cHist = document.getElementById('listaHistorico'); 
-      cHist.innerHTML = d.historico.length ? d.historico.map(h => `
-        <div class="item-historico">
-          <div><b>${h.Data}</b> — ${h.Descricao}</div>
-        </div>
-      `).join('') : '<div class="vazio">Sem registros.</div>';
+      if (d.historico.length > 0) {
+        cHist.innerHTML = d.historico.map(h => `
+          <div class="item-historico">
+            <div><b>${h.Data}</b> — ${h.Descricao}</div>
+          </div>
+        `).join('');
+      } else {
+        cHist.innerHTML = '<div class="vazio">Sem registros.</div>';
+      }
       
       const cPend = document.getElementById('listaPendencias'); 
-      cPend.innerHTML = d.pendencias.length ? d.pendencias.map(p => `
-        <div class="item-pendencia ${p.Status === 'Concluído' ? 'concluida' : ''}">
-          <div><b>${p.Item}</b>${p.Local ? '<br><span style="font-size:11px">📍 ' + p.Local + '</span>' : ''}</div>
-          ${p.Status !== 'Concluído' && !carroAtualVendido ? `
-            <button class="acao secundario restrito" onclick="concluirPendencia('${p.Id}')">Concluir</button>
-          ` : ''}
-        </div>
-      `).join('') : '<div class="vazio">Nenhuma OS.</div>';
+      if (d.pendencias.length > 0) {
+        cPend.innerHTML = d.pendencias.map(p => {
+          let classeConcluida = p.Status === 'Concluído' ? 'concluida' : '';
+          let localInfo = p.Local ? `<br><span style="font-size:11px">📍 ${p.Local}</span>` : '';
+          
+          let botaoConcluir = '';
+          if (p.Status !== 'Concluído' && !carroAtualVendido) {
+            botaoConcluir = `<button class="acao secundario restrito" onclick="concluirPendencia('${p.Id}')">Concluir</button>`;
+          }
+          
+          return `
+            <div class="item-pendencia ${classeConcluida}">
+              <div><b>${p.Item}</b>${localInfo}</div>
+              ${botaoConcluir}
+            </div>
+          `;
+        }).join('');
+      } else {
+        cPend.innerHTML = '<div class="vazio">Nenhuma OS.</div>';
+      }
       
       mudarSubTab('historico'); 
+      
       document.querySelectorAll('.chk-servico').forEach(x => x.checked = false); 
       document.getElementById('novoServicoOutro').value = ''; 
       document.getElementById('localMartelinho').value = '';
@@ -1071,18 +1238,24 @@
     function mudarSubTab(tab) { 
       document.getElementById('tabHistorico').classList.toggle('ativo', tab === 'historico'); 
       document.getElementById('tabPendencias').classList.toggle('ativo', tab === 'pendencias'); 
-      document.getElementById('subHistorico').style.display = tab === 'historico' ? 'block' : 'none'; 
-      document.getElementById('subPendencias').style.display = tab === 'pendencias' ? 'block' : 'none'; 
+      
+      if (tab === 'historico') {
+        document.getElementById('subHistorico').style.display = 'block';
+        document.getElementById('subPendencias').style.display = 'none';
+      } else {
+        document.getElementById('subHistorico').style.display = 'none';
+        document.getElementById('subPendencias').style.display = 'block';
+      }
     }
     
     async function salvarHistorico() { 
       const t = document.getElementById('novoHistoricoTexto').value; 
-      if(!t) return; 
+      if (!t) return; 
       
-      await chamarApiPost({
+      await chamarApiPost({ 
         action: 'adicionarHistorico', 
         chassi: chassiAtual, 
-        descricao: t
+        descricao: t 
       }); 
       
       document.getElementById('novoHistoricoTexto').value = ''; 
@@ -1091,26 +1264,29 @@
     }
     
     async function salvarPendencias() { 
-      const s = Array.from(document.querySelectorAll('.chk-servico')).filter(c => c.checked).map(c => c.value);
-      const o = document.getElementById('novoServicoOutro').value;
-      const l = document.getElementById('localMartelinho').value; 
+      const chkBoxes = document.querySelectorAll('.chk-servico');
+      const selecionados = Array.from(chkBoxes).filter(c => c.checked).map(c => c.value);
       
-      if(!s.length && !o) return; 
+      const outroServico = document.getElementById('novoServicoOutro').value;
+      const localAvaria = document.getElementById('localMartelinho').value; 
       
-      for(const x of s) {
-        await chamarApiPost({
+      if (selecionados.length === 0 && !outroServico) return; 
+      
+      for (const item of selecionados) {
+        let local = item.includes('Martelinho') ? localAvaria : '';
+        await chamarApiPost({ 
           action: 'adicionarPendencia', 
           chassi: chassiAtual, 
-          item: x, 
-          local: x.includes('Martelinho') ? l : ''
+          item: item, 
+          local: local 
         }); 
-      }
+      } 
       
-      if(o) {
-        await chamarApiPost({
+      if (outroServico) {
+        await chamarApiPost({ 
           action: 'adicionarPendencia', 
           chassi: chassiAtual, 
-          item: o
+          item: outroServico 
         }); 
       }
       
@@ -1119,17 +1295,17 @@
     }
     
     async function concluirPendencia(id) { 
-      await chamarApiPost({
+      await chamarApiPost({ 
         action: 'concluirPendencia', 
-        id
+        id: id 
       }); 
       abrirFicha(chassiAtual); 
     }
     
     async function registrarInspecao() { 
-      await chamarApiPost({
+      await chamarApiPost({ 
         action: 'registrarInspecaoBateria', 
-        chassi: chassiAtual
+        chassi: chassiAtual 
       }); 
       abrirFicha(chassiAtual); 
       carregarCarros(); 
@@ -1140,11 +1316,13 @@
     }
     
     async function confirmarVenda() { 
-      await chamarApiPost({
+      const dataVenda = document.getElementById('dataVenda').value;
+      await chamarApiPost({ 
         action: 'marcarVendido', 
         chassi: chassiAtual, 
-        dataVenda: document.getElementById('dataVenda').value
+        dataVenda: dataVenda 
       }); 
+      
       fecharModal('modalVenda'); 
       fecharModal('modalFicha'); 
       carregarCarros(); 
@@ -1156,17 +1334,17 @@
     }
     
     async function confirmarRemocao() { 
-      const u = document.getElementById('removerUsuario').value;
-      const s = document.getElementById('removerSenha').value;
+      const usuario = document.getElementById('removerUsuario').value;
+      const senha = document.getElementById('removerSenha').value;
       
-      const r = await chamarApiPost({
+      const r = await chamarApiPost({ 
         action: 'removerCarro', 
         chassi: chassiAtual, 
-        usuario: u, 
-        senha: s
+        usuario: usuario, 
+        senha: senha 
       }); 
       
-      if(r.erro) { 
+      if (r.erro) { 
         const e = document.getElementById('erroRemover'); 
         e.textContent = r.erro; 
         e.style.display = 'block'; 
@@ -1178,41 +1356,45 @@
       carregarCarros(); 
     }
     
-    function enviarFoto(e, cat) { 
-      const a = e.target.files[0]; 
-      if(!a) return; 
+    function enviarFoto(event, categoria) { 
+      const arquivo = event.target.files[0]; 
+      if (!arquivo) return; 
       
-      const l = new FileReader(); 
-      l.onload = async function() { 
-        await chamarApiPost({
+      const leitor = new FileReader(); 
+      leitor.onload = async function() { 
+        const base64Data = leitor.result.split(',')[1];
+        
+        await chamarApiPost({ 
           action: 'uploadFoto', 
           chassi: chassiAtual, 
-          nomeArquivo: a.name, 
-          base64: l.result.split(',')[1], 
-          tipoMime: a.type, 
-          categoria: cat
+          nomeArquivo: arquivo.name, 
+          base64: base64Data, 
+          tipoMime: arquivo.type, 
+          categoria: categoria 
         }); 
+        
         abrirFicha(chassiAtual); 
       }; 
-      l.readAsDataURL(a); 
+      
+      leitor.readAsDataURL(arquivo); 
     }
     
     async function salvarNovoCarro() { 
-      const d = {
+      const dadosCarro = { 
         chassi: document.getElementById('novoChassi').value.trim(), 
         modelo: document.getElementById('novoModelo').value, 
         cor: document.getElementById('novoCor').value, 
         ano: document.getElementById('novoAno').value, 
-        dataEntrada: document.getElementById('novoDataEntrada').value
+        dataEntrada: document.getElementById('novoDataEntrada').value 
       }; 
       
-      if(!d.chassi || !d.modelo || !d.cor) {
+      if (!dadosCarro.chassi || !dadosCarro.modelo || !dadosCarro.cor) {
         return mostrarToast('Preencha os obrigatórios.'); 
       }
       
-      await chamarApiPost({
+      await chamarApiPost({ 
         action: 'cadastrarCarro', 
-        dados: d
+        dados: dadosCarro 
       }); 
       
       fecharModal('modalNovoCarro'); 
