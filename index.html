@@ -630,11 +630,9 @@
     <div class="caixa-marcas">
       <button class="btn-marca" onclick="escolherMarca('oj')">
         <img src="logo-oj.png" alt="Omoda & Jaecoo" style="max-width: 100%; max-height: 45px; object-fit: contain; margin-bottom: 10px; filter: invert(1);" onerror="this.style.display='none'">
-        <h3>Omoda / Jaecoo</h3>
       </button>
       <button class="btn-marca" onclick="escolherMarca('jetour')">
         <img src="logo-jetour.png" alt="Jetour" style="max-width: 100%; max-height: 45px; object-fit: contain; margin-bottom: 10px; filter: invert(1);" onerror="this.style.display='none'">
-        <h3>Jetour</h3>
       </button>
     </div>
   </div>
@@ -642,13 +640,13 @@
   <div id="app" style="display:none;">
     <header>
       <div class="logos-header" onclick="comandoSecreto()">
-        <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
+        <img src="logo-cobel2.png" alt="Cobel" onerror="this.style.display='none'">
         <img id="logoAtiva" src="" alt="Marca" onerror="this.style.display='none'">
       </div>
       <nav>
         <button id="tabEstoque" class="ativo">Estoque</button>
         <button id="tabVendidos">Vendidos</button>
-        <button class="sair" style="color:var(--branco); border-color:var(--branco);" onclick="abrirTelaMarcas()">Trocar Marca</button>
+        <button class="sair" style="color:var(--branco); border-color:var(--branco);" onclick="abrirTelaMarcas()">Tela de Início</button>
         <button class="sair" onclick="sair()">Sair</button>
       </nav>
     </header>
@@ -664,8 +662,12 @@
           <option value="omoda 5">Omoda 5</option>
           <option value="omoda 7">Omoda 7</option>
           <option value="omoda 4">Omoda 4</option>
-          <option value="jetour dashing">Jetour Dashing</option>
-          <option value="jetour x70">Jetour X70</option>
+          <option value="jetour dashing">T2</option>
+          <option value="jetour x70">T1</option>
+          <option value="jetour x70">S06</option>
+          <option value="jetour x70">G700</option>
+
+
         </select>
         <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
         <label class="filtro-atraso">
@@ -675,7 +677,7 @@
         <!-- Botões que somem se for modo leitura -->
         <div class="restrito" style="display:inline-flex; gap:10px;">
           <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Veículo</button>
-          <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">🔄 Sincronizar ERP</button>
+          <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
         </div>
       </div>
       
@@ -875,14 +877,18 @@
       if (!nome) return ''; 
       
       const n = nome.toLowerCase(); 
+      if (n.includes('omoda 4')) return 'Omoda 4';
       if (n.includes('omoda 5')) return 'Omoda 5'; 
+      if (n.includes('omoda 7')) return 'Omoda 7';
+      if (n.includes('jaecoo 5')) return 'Jaecoo 5';
       if (n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7'; 
-      if (n.includes('jaecoo 5')) return 'Jaecoo 5'; 
+      if (n.includes('jaecoo 8')) return 'Jaecoo 8';
       
       // Jetour extrações
-      if (n.includes('dashing')) return 'Jetour Dashing';
-      if (n.includes('x70')) return 'Jetour X70';
-      if (n.includes('jetour')) return 'Jetour'; 
+      if (n.includes('t1')) return 'T1';
+      if (n.includes('t2')) return 'T2';
+      if (n.includes('s06')) return 'S06'; 
+      if (n.includes('g700')) return 'G700';
       
       return nome; 
     }
@@ -1112,7 +1118,7 @@
       clickCobel++;
       if (clickCobel >= 5) {
         clickCobel = 0;
-        if (confirm('⚠️ MODO ADMIN: Deseja apagar o estoque atual e recriar sincronizando do zero com a aba ERP?')) {
+        if (confirm('MODO ADMIN: Deseja apagar o estoque atual e recriar sincronizando do zero com a aba ERP?')) {
           resetTudo();
         }
       }
