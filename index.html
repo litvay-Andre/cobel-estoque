@@ -4,22 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estoque de Carros — Cobel</title>
-
-  <!-- Fontes Automotivas Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Identidade Visual Cobel & O|J */
-      --primary: #111111;      /* Preto */
-      --primary-2: #2b2b2b;    /* Grafite */
-      --accent: #D20A11;       /* Vermelho */
-      --accent-esc: #a0070c;   /* Vermelho Escuro */
-      --prata: #e5e7eb;        /* Prata / Cinza claro */
-      
-      --bg: #f4f4f5;           /* Fundo da tela */
+      --primary: #111111;
+      --primary-2: #2b2b2b;
+      --accent: #D20A11;
+      --accent-esc: #a0070c;
+      --prata: #e5e7eb;
+      --bg: #f4f4f5;
       --branco: #ffffff;
       --texto: #1a1a1a;
       --texto-suave: #6b7280;
@@ -62,6 +58,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      cursor: pointer;
     }
 
     .logos-header img {
@@ -159,6 +156,7 @@
     #btnNovoCarro {
       background: var(--accent);
     }
+
     #btnNovoCarro:hover {
       background: var(--accent-esc);
     }
@@ -183,7 +181,7 @@
 
     .grid-carros {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 16px;
     }
 
@@ -227,7 +225,7 @@
 
     .card-carro h3 {
       font-size: 18px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       color: var(--primary);
     }
 
@@ -368,26 +366,6 @@
       text-decoration: line-through;
     }
 
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--primary);
-      color: #fff;
-      padding: 16px 24px;
-      border-radius: 4px;
-      display: none;
-      z-index: 100;
-      font-size: 14px;
-      font-weight: 500;
-      box-shadow: 0 10px 15px rgba(0, 0, 0, .2);
-      border-left: 4px solid var(--accent);
-    }
-
-    .toast.mostrar {
-      display: block;
-    }
-
     .fotos-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -463,7 +441,7 @@
       margin-bottom: 16px;
     }
 
-    /* ---------- TELA DE LOGIN ---------- */
+    /* Login */
     #telaLogin {
       position: fixed;
       inset: 0;
@@ -523,16 +501,74 @@
       display: none;
       text-align: center;
     }
+
+    /* Overlay Loading */
+    #loadingOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,17,17,0.85);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top-color: var(--vermelho);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 4px;
+      display: none;
+      z-index: 10000;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, .2);
+      border-left: 4px solid var(--accent);
+    }
+
+    .toast.mostrar {
+      display: block;
+    }
+
+    /* Restrição Leitura */
+    body.modo-leitura .restrito,
+    body.modo-leitura #btnNovoCarro,
+    body.modo-leitura #btnSincronizar {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
 
-  <!-- ===================== TELA DE LOGIN ===================== -->
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+    <h3 id="loadingText" style="color:#fff;">PROCESSANDO...</h3>
+  </div>
+
   <div id="telaLogin">
     <div class="caixa-login">
       <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
       <h2>Estoque de Carros</h2>
-      <p>Acesso restrito à equipe técnica — Cobel</p>
+      <p>Acesso à equipe Omoda & Jaecoo</p>
       <div class="campo">
         <label>Usuário</label>
         <input type="text" id="loginUsuario">
@@ -548,7 +584,7 @@
 
   <div id="app" style="display:none;">
     <header>
-      <div class="logos-header">
+      <div class="logos-header" onclick="comandoSecreto()">
         <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
         <img src="logo-oj.png" alt="Omoda & Jaecoo" onerror="this.style.display='none'">
       </div>
@@ -562,7 +598,6 @@
     <main>
       <div class="toolbar">
         <input type="text" id="busca" placeholder="Buscar por chassi...">
-        
         <select id="filtroModelo">
           <option value="">Todos os Modelos</option>
           <option value="jaecoo 7">Jaecoo 7</option>
@@ -572,18 +607,18 @@
           <option value="omoda 7">Omoda 7</option>
           <option value="omoda 4">Omoda 4</option>
         </select>
-
         <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
-
-       <label class="filtro-atraso">
+        <label class="filtro-atraso">
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
-        <button class="acao" id="btnNovoCarro">+ Novo Carro</button>
-        <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
+        <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Carro</button>
+        <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">🔄 Sincronizar ERP</button>
       </div>
+      
       <div id="listaCarros" class="grid-carros"></div>
+      
       <div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 12px; color: var(--texto-suave);">
-        Desenvolvido por <b>[André Litvay - Cobel O&J]</b>
+        Desenvolvido por <b>André Litvay - Cobel O&J</b>
       </div>
     </main>
   </div>
@@ -593,25 +628,21 @@
     <div class="modal" style="max-width:720px;">
       <button class="fechar" onclick="fecharModal('modalFicha')">&times;</button>
       <h2 id="fichaTitulo">Carro</h2>
-      
-      <div id="avisoVendido" class="aviso-vendido" style="display:none;">
-        Este carro já foi vendido. Apenas Consulta.
-      </div>
+      <div id="avisoVendido" class="aviso-vendido" style="display:none;">Este carro já foi vendido. Apenas Consulta.</div>
       
       <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div id="fichaDados" style="flex: 1;"></div>
-        <!-- Imagem do modelo aqui dentro da ficha -->
         <img id="fichaImgModelo" src="" alt="Modelo" style="width: 140px; object-fit: contain; margin-left: 20px; display: none;">
       </div>
 
       <div class="fotos-grid" id="fichaFotosGerais"></div>
       
-      <div id="acoesFicha" style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-        <label class="acao secundario" style="cursor:pointer;"> 
+      <div id="acoesFicha" class="restrito" style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <label class="acao secundario" style="cursor:pointer;">
           Fotos Padrões
           <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'geral')">
         </label>
-        <label class="acao secundario" style="cursor:pointer;"> 
+        <label class="acao secundario" style="cursor:pointer;">
           Registrar Avaria
           <input type="file" accept="image/*" capture="environment" style="display:none" onchange="enviarFoto(event,'avaria')">
         </label>
@@ -619,7 +650,7 @@
         <button class="acao perigo" onclick="abrirModalVenda()">Marcar como Vendido</button>
       </div>
       
-      <div style="margin-top:10px;">
+      <div style="margin-top:10px;" class="restrito">
         <button class="acao perigo" style="background:transparent; color:var(--vermelho); border:1px solid var(--vermelho);" onclick="abrirModalRemover()">Remover carro</button>
       </div>
       
@@ -629,7 +660,7 @@
       </div>
       
       <div id="subHistorico">
-        <div style="display:flex;gap:8px;margin-bottom:12px;" id="formHistorico">
+        <div style="display:flex;gap:8px;margin-bottom:12px;" id="formHistorico" class="restrito">
           <input type="text" id="novoHistoricoTexto" placeholder="Descreva o que foi feito...">
           <button class="acao" onclick="salvarHistorico()">Adicionar</button>
         </div>
@@ -637,12 +668,12 @@
       </div>
       
       <div id="subPendencias" style="display:none;">
-        <div id="formPendencias">
+        <div id="formPendencias" class="restrito">
           <p style="font-size:13px;color:var(--texto-suave);margin-bottom:8px;font-weight:600;">Marque os serviços que precisam ser feitos:</p>
           <div class="checklist" id="checklistServicos"></div>
           
           <div class="campo" id="campoLocalMartelinho" style="display:none;">
-            <label>Local Exato da Avaria (para o martelinho de ouro)</label>
+            <label>Local Exato da Avaria</label>
             <input type="text" id="localMartelinho" placeholder="Ex: porta dianteira direita">
           </div>
           
@@ -669,7 +700,7 @@
         <div class="campo">
           <label>Modelo *</label>
           <select id="novoModelo">
-            <option value="">Selecione o modelo...</option>
+            <option value="">Selecione...</option>
             <option value="Jaecoo 7">Jaecoo 7</option>
             <option value="Jaecoo 5">Jaecoo 5</option>
             <option value="Jaecoo 8">Jaecoo 8</option>
@@ -699,12 +730,12 @@
   <div class="modal-fundo" id="modalVenda">
     <div class="modal" style="max-width: 400px;">
       <button class="fechar" onclick="fecharModal('modalVenda')">&times;</button>
-      <h2>Marcar carro como vendido</h2>
+      <h2>Marcar vendido</h2>
       <div class="campo">
-        <label>Data da venda</label>
+        <label>Data</label>
         <input type="date" id="dataVenda">
       </div>
-      <button class="acao perigo" style="width:100%;margin-top:10px;" onclick="confirmarVenda()">Confirmar venda</button>
+      <button class="acao perigo" style="width:100%;" onclick="confirmarVenda()">Confirmar</button>
     </div>
   </div>
 
@@ -713,9 +744,6 @@
     <div class="modal" style="max-width: 400px;">
       <button class="fechar" onclick="fecharModal('modalRemover')">&times;</button>
       <h2>Remover carro</h2>
-      <p style="font-size:13px;color:var(--texto-suave);margin-bottom:16px;line-height:1.4;">
-        Essa ação apaga o carro definitivamente, junto com seu histórico e pendências. Confirme com usuário e senha.
-      </p>
       <div class="campo">
         <label>Usuário</label>
         <input type="text" id="removerUsuario">
@@ -725,7 +753,7 @@
         <input type="password" id="removerSenha">
       </div>
       <div class="erro-login" id="erroRemover"></div>
-      <button class="acao perigo" style="width:100%;margin-top:10px;" onclick="confirmarRemocao()">Confirmar remoção</button>
+      <button class="acao perigo" style="width:100%;" onclick="confirmarRemocao()">Confirmar</button>
     </div>
   </div>
 
@@ -733,11 +761,8 @@
 
   <script>
     console.log('%c Sistema desenvolvido por André Litvay', 'color: #D20A11; font-weight: bold; font-size: 14px;');
-    /* =====================================================
-       CONFIGURAÇÃO
-       ===================================================== */
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxFoyDfZGKndTUnJgOJHthfON1CRjc1FEb5Im0R-2VLOa9GGnRu8V6BZZDqVEUtWvNy/exec';
     
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxFoyDfZGKndTUnJgOJHthfON1CRjc1FEb5Im0R-2VLOa9GGnRu8V6BZZDqVEUtWvNy/exec';
     const SERVICOS_PADRAO = [
       'Vitrificação',
       'Película',
@@ -747,8 +772,6 @@
       'Insulfilm',
       'Envelopamento'
     ];
-
-    // Dicionário mapeando os modelos para os nomes dos arquivos PNG
     const IMAGENS_MODELOS = {
       'jaecoo 7': 'jaecoo-7.png',
       'jaecoo 5': 'jaecoo-5.png',
@@ -757,82 +780,28 @@
       'omoda 7': 'omoda-7.png',
       'omoda 4': 'omoda-4.png'
     };
-
-    function simplificarModelo(nomeCompleto) {
-      if (!nomeCompleto) return '';
-      const n = nomeCompleto.toLowerCase();
-      if (n.includes('omoda 5')) return 'Omoda 5';
-      if (n.includes('omoda 7')) return 'Omoda 7';
-      if (n.includes('omoda 4')) return 'Omoda 4';
-      if (n.includes('jaecoo 7') || n.includes('jaecoo j7') || n.includes('j7')) return 'Jaecoo 7';
-      if (n.includes('jaecoo 5')) return 'Jaecoo 5';
-      if (n.includes('jaecoo 8')) return 'Jaecoo 8';
-      return nomeCompleto; 
-    }
-
-    function obterCaminhoImagem(modelo) {
-      if (!modelo) return '';
-      const key = modelo.trim().toLowerCase();
-      return IMAGENS_MODELOS[key] || '';
-    }
-
+    
     let carrosCache = [];
     let chassiAtual = null;
     let carroAtualVendido = false;
+    let clickCobel = 0;
 
-    // ---------- login ----------
-    function fazerLogin() {
-      const usuario = document.getElementById('loginUsuario').value.trim();
-      const senha = document.getElementById('loginSenha').value;
-      const erroEl = document.getElementById('erroLogin');
-      
-      erroEl.style.display = 'none';
-      
-      fetch(API_URL, {
-        method: 'POST', 
-        body: JSON.stringify({ action: 'login', usuario, senha })
-      })
-      .then(r => r.json())
-      .then(dados => {
-        if (dados.sucesso) {
-          localStorage.setItem('cobel_autenticado', '1');
-          mostrarApp();
-        } else {
-          erroEl.textContent = dados.erro || 'Não foi possível entrar.';
-          erroEl.style.display = 'block';
-        }
-      })
-      .catch(() => {
-        erroEl.textContent = 'Erro de conexão. Tente novamente.';
-        erroEl.style.display = 'block';
-      });
+    function mostrarLoading(texto = 'PROCESSANDO...') { 
+      document.getElementById('loadingText').textContent = texto; 
+      document.getElementById('loadingOverlay').style.display = 'flex'; 
     }
-
-    function sair() {
-      localStorage.removeItem('cobel_autenticado');
-      location.reload();
+    
+    function esconderLoading() { 
+      document.getElementById('loadingOverlay').style.display = 'none'; 
     }
-
-    function mostrarApp() {
-      document.getElementById('telaLogin').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      montarChecklist();
-      carregarCarros();
+    
+    function mostrarToast(msg) { 
+      const t = document.getElementById('toast'); 
+      t.textContent = msg; 
+      t.classList.add('mostrar'); 
+      setTimeout(() => t.classList.remove('mostrar'), 3000); 
     }
-
-    // verifica se já está autenticado
-    if (localStorage.getItem('cobel_autenticado') === '1') {
-      mostrarApp();
-    }
-
-    // ---------- utilitários ----------
-    function mostrarToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('mostrar');
-      setTimeout(() => t.classList.remove('mostrar'), 2800);
-    }
-
+    
     function abrirModal(id) { 
       document.getElementById(id).classList.add('aberto'); 
     }
@@ -840,396 +809,412 @@
     function fecharModal(id) { 
       document.getElementById(id).classList.remove('aberto'); 
     }
-
-    async function chamarApi(params) {
-      const url = API_URL + '?' + new URLSearchParams(params).toString();
-      const resp = await fetch(url);
-      return resp.json();
+    
+    function simplificarModelo(nome) { 
+      if(!nome) return ''; 
+      const n = nome.toLowerCase(); 
+      if(n.includes('omoda 5')) return 'Omoda 5'; 
+      if(n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7'; 
+      if(n.includes('jaecoo 5')) return 'Jaecoo 5'; 
+      return nome; 
+    }
+    
+    function obterCaminhoImagem(mod) { 
+      return IMAGENS_MODELOS[mod?.trim().toLowerCase()] || ''; 
     }
 
-    async function chamarApiPost(corpo) {
+    async function chamarApi(params) { 
+      mostrarLoading('Sincronizando Banco de Dados...'); 
+      const resp = await fetch(API_URL + '?' + new URLSearchParams(params).toString()); 
+      esconderLoading(); 
+      return resp.json(); 
+    }
+    
+    async function chamarApiPost(corpo) { 
+      mostrarLoading('Atualizando Informações...'); 
       const resp = await fetch(API_URL, { 
         method: 'POST', 
         body: JSON.stringify(corpo) 
-      });
-      return resp.json();
+      }); 
+      esconderLoading(); 
+      return resp.json(); 
     }
 
-    // ---------- checklist de serviços ----------
-    function montarChecklist() {
-      const cont = document.getElementById('checklistServicos');
-      cont.innerHTML = SERVICOS_PADRAO.map(s => `
+    function fazerLogin() {
+      const u = document.getElementById('loginUsuario').value.trim();
+      const s = document.getElementById('loginSenha').value;
+      const e = document.getElementById('erroLogin'); 
+      
+      e.style.display = 'none';
+      mostrarLoading('Validando acesso...');
+      
+      fetch(API_URL, { 
+        method: 'POST', 
+        body: JSON.stringify({ action: 'login', usuario: u, senha: s }) 
+      })
+      .then(r => r.json())
+      .then(d => {
+        esconderLoading();
+        if(d.sucesso) { 
+          localStorage.setItem('cobel_autenticado', '1'); 
+          localStorage.setItem('cobel_role', d.role); 
+          mostrarApp(); 
+        } else { 
+          e.textContent = d.erro; 
+          e.style.display = 'block'; 
+        }
+      })
+      .catch(() => { 
+        esconderLoading(); 
+        e.textContent = 'Erro de conexão.'; 
+        e.style.display = 'block'; 
+      });
+    }
+
+    function sair() { 
+      localStorage.clear(); 
+      location.reload(); 
+    }
+
+    function mostrarApp() { 
+      document.getElementById('telaLogin').style.display = 'none'; 
+      document.getElementById('app').style.display = 'block'; 
+      
+      if(localStorage.getItem('cobel_role') === 'viewer') {
+        document.body.classList.add('modo-leitura');
+      }
+      
+      montarChecklist(); 
+      carregarCarros(); 
+    }
+
+    if(localStorage.getItem('cobel_autenticado') === '1') {
+      mostrarApp();
+    }
+
+    function montarChecklist() { 
+      document.getElementById('checklistServicos').innerHTML = SERVICOS_PADRAO.map(s => `
         <label>
           <input type="checkbox" class="chk-servico" value="${s}" onchange="verificarMartelinho()">
           ${s}
         </label>
-      `).join('');
+      `).join(''); 
     }
 
-    function verificarMartelinho() {
-      const marcado = Array.from(document.querySelectorAll('.chk-servico'))
-        .some(c => c.checked && c.value.includes('Martelinho'));
-      document.getElementById('campoLocalMartelinho').style.display = marcado ? 'block' : 'none';
+    function verificarMartelinho() { 
+      document.getElementById('campoLocalMartelinho').style.display = Array.from(document.querySelectorAll('.chk-servico')).some(c => c.checked && c.value.includes('Martelinho')) ? 'block' : 'none'; 
     }
 
-    // ---------- carregar estoque ----------
-    async function carregarCarros() {
-      document.getElementById('listaCarros').innerHTML = '<div class="carregando">Carregando estoque...</div>';
-      try {
-        const dados = await chamarApi({ action: 'listarCarros' });
-        carrosCache = dados.carros || [];
-        renderizarLista();
-      } catch(e) {
-        document.getElementById('listaCarros').innerHTML = '<div class="vazio">Erro ao carregar. Verifique a URL da API.</div>';
-      }
-    }
-
-    async function rodarSincronizacao() {
-      mostrarToast('Sincronizando com a planilha ERP...');
-      const resultado = await chamarApiPost({ action: 'sincronizar' });
-      
-      if(resultado.erro) {
-        mostrarToast('Erro: ' + resultado.erro);
-      } else {
-        mostrarToast(resultado.carrosAdicionados + ' carros novos importados!');
-        carregarCarros(); // Recarrega a tela para mostrar os carros novos
-      }
+    async function carregarCarros() { 
+      try { 
+        const d = await chamarApi({ action: 'listarCarros' }); 
+        carrosCache = d.carros || []; 
+        renderizarLista(); 
+      } catch(e) {} 
     }
 
     function renderizarLista() {
-      const busca = document.getElementById('busca').value.trim().toLowerCase();
-      const soAtraso = document.getElementById('filtroAtraso').checked;
-      const filtroModelo = document.getElementById('filtroModelo').value.trim().toLowerCase();
-      const filtroCor = document.getElementById('filtroCor').value.trim().toLowerCase();
+      const b = document.getElementById('busca').value.toLowerCase();
+      const soA = document.getElementById('filtroAtraso').checked;
+      const fm = document.getElementById('filtroModelo').value.toLowerCase();
+      const fc = document.getElementById('filtroCor').value.toLowerCase();
       
-      let filtrados = carrosCache.filter(c => {
-        const textoGeral = ((c.Chassi || '') + ' ' + (c.Modelo || '') + ' ' + (c.Cor || '')).toLowerCase();
-        const passaBusca = textoGeral.includes(busca);
-        const passaModelo = filtroModelo === '' || (c.Modelo || '').toLowerCase().includes(filtroModelo);
-        const passaCor = filtroCor === '' || (c.Cor || '').toLowerCase().includes(filtroCor);
-        return passaBusca && passaModelo && passaCor;
+      let f = carrosCache.filter(c => { 
+        const t = c.Chassi + c.Modelo + c.Cor; 
+        return t.toLowerCase().includes(b) && 
+               (fm === '' || (c.Modelo || '').toLowerCase().includes(fm)) && 
+               (fc === '' || (c.Cor || '').toLowerCase().includes(fc)); 
       });
       
-      if (soAtraso) {
-        filtrados = filtrados.filter(c => c.inspecaoAtrasada);
+      if(soA) {
+        f = f.filter(c => c.inspecaoAtrasada);
       }
       
-      const cont = document.getElementById('listaCarros');
-      
-      if (filtrados.length === 0) {
-        cont.innerHTML = '<div class="vazio">Nenhum carro encontrado.</div>';
-        return;
-      }
-      
- cont.innerHTML = filtrados.map(c => {
-        const modeloSimples = simplificarModelo(c.Modelo);
-        const imgPath = obterCaminhoImagem(modeloSimples);
-        const tagImg = imgPath ? `<img class="card-img-modelo" src="${imgPath}" alt="${modeloSimples}" onerror="this.style.display='none'">` : '';
-
+      document.getElementById('listaCarros').innerHTML = f.length ? f.map(c => {
+        const m = simplificarModelo(c.Modelo);
+        const i = obterCaminhoImagem(m);
         return `
-        <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
-          <div class="card-info">
-            <h3>${modeloSimples}</h3>
-            <p style="font-size: 11px; margin-bottom: 8px;">Versão: ${c.Modelo}</p>
-            <p>Chassi: ${c.Chassi}</p>
-            <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
-            <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">
-              ${c.inspecaoAtrasada ? 'Inspeção Atrasada (' + c.diasDesdeInspecao + 'd)' : 'Inspeção em Dia'}
-            </span>
-          </div>
-          ${tagImg}
-        </div>
-      `}).join('');
+          <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
+            <div class="card-info">
+              <h3>${m}</h3>
+              <p style="font-size:11px;margin-bottom:8px">Versão: ${c.Modelo}</p>
+              <p>Chassi: ${c.Chassi}</p>
+              <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
+              <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">
+                ${c.inspecaoAtrasada ? 'Atrasada (' + c.diasDesdeInspecao + 'd)' : 'Em Dia'}
+              </span>
+            </div>
+            ${i ? `<img class="card-img-modelo" src="${i}">` : ''}
+          </div>`;
+      }).join('') : '<div class="vazio">Nenhum carro encontrado.</div>';
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('busca').addEventListener('input', renderizarLista);
-      document.getElementById('filtroAtraso').addEventListener('change', renderizarLista);
-      document.getElementById('filtroModelo').addEventListener('change', renderizarLista);
-      document.getElementById('filtroCor').addEventListener('input', renderizarLista);
-
-      document.getElementById('btnNovoCarro').addEventListener('click', () => abrirModal('modalNovoCarro'));
-      
-      document.getElementById('tabEstoque').addEventListener('click', () => {
-        document.getElementById('tabEstoque').classList.add('ativo');
-        document.getElementById('tabVendidos').classList.remove('ativo');
-        carregarCarros();
-      });
-      
-      document.getElementById('tabVendidos').addEventListener('click', carregarVendidos);
+    document.getElementById('busca').addEventListener('input', renderizarLista); 
+    document.getElementById('filtroAtraso').addEventListener('change', renderizarLista); 
+    document.getElementById('filtroModelo').addEventListener('change', renderizarLista); 
+    document.getElementById('filtroCor').addEventListener('input', renderizarLista);
+    
+    document.getElementById('tabEstoque').addEventListener('click', () => { 
+      document.getElementById('tabEstoque').classList.add('ativo'); 
+      document.getElementById('tabVendidos').classList.remove('ativo'); 
+      carregarCarros(); 
+    });
+    
+    document.getElementById('tabVendidos').addEventListener('click', async () => { 
+      document.getElementById('tabVendidos').classList.add('ativo'); 
+      document.getElementById('tabEstoque').classList.remove('ativo'); 
+      const d = await chamarApi({ action: 'listarVendidos' }); 
+      carrosCache = d.vendidos || []; 
+      renderizarLista(); 
     });
 
-    async function carregarVendidos() {
-      document.getElementById('tabVendidos').classList.add('ativo');
-      document.getElementById('tabEstoque').classList.remove('ativo');
-      
-      const cont = document.getElementById('listaCarros');
-      cont.innerHTML = '<div class="carregando">Carregando vendidos...</div>';
-      
-      const dados = await chamarApi({ action: 'listarVendidos' });
-      carrosCache = dados.vendidos || [];
-      
-      renderizarLista();
+    async function rodarSincronizacao() { 
+      const r = await chamarApiPost({ action: 'sincronizar' }); 
+      if(r.erro) {
+        mostrarToast(r.erro); 
+      } else { 
+        mostrarToast(r.carrosAdicionados + ' carros novos!'); 
+        carregarCarros(); 
+      } 
     }
 
-// ---------- ficha do carro ----------
-    async function abrirFicha(chassi) {
-      chassiAtual = chassi;
-      abrirModal('modalFicha');
-      document.getElementById('fichaDados').innerHTML = '<div class="carregando">Carregando...</div>';
-      document.getElementById('fichaImgModelo').src = '';
-      
-      const dados = await chamarApi({ action: 'obterCarro', chassi });
-      
-      if (dados.erro) { 
-        mostrarToast(dados.erro); 
-        return; 
+    function comandoSecreto() {
+      clickCobel++;
+      if(clickCobel >= 5) {
+        clickCobel = 0;
+        if(confirm('⚠️ MODO ADMIN: Deseja apagar o estoque atual e recriar sincronizando do zero com a aba ERP?')) {
+          resetTudo();
+        }
       }
-      
-      const c = dados.carro;
-      carroAtualVendido = !!dados.vendido;
-      
-      const modeloSimples = simplificarModelo(c.Modelo);
-      document.getElementById('fichaTitulo').textContent = `${modeloSimples} — ${c.Chassi}`;
-      
-      document.getElementById('avisoVendido').style.display = carroAtualVendido ? 'block' : 'none';
-      document.getElementById('acoesFicha').style.display = carroAtualVendido ? 'none' : 'flex';
-      document.getElementById('formHistorico').style.display = carroAtualVendido ? 'none' : 'flex';
-      document.getElementById('formPendencias').style.display = carroAtualVendido ? 'none' : 'block';
+      setTimeout(() => clickCobel = 0, 3000);
+    }
 
-      const imgPath = obterCaminhoImagem(modeloSimples);
-      const imgElement = document.getElementById('fichaImgModelo');
-      if (imgPath) {
-        imgElement.src = imgPath;
-        imgElement.style.display = 'block';
-      } else {
-        imgElement.style.display = 'none';
+    async function resetTudo() { 
+      const r = await chamarApiPost({action: 'resetSync'}); 
+      if(!r.erro) { 
+        mostrarToast('Estoque formatado!'); 
+        carregarCarros(); 
+      } 
+    }
+
+    async function abrirFicha(chassi) {
+      chassiAtual = chassi; 
+      abrirModal('modalFicha');
+      
+      const d = await chamarApi({ action: 'obterCarro', chassi }); 
+      if(d.erro) {
+        return mostrarToast(d.erro);
       }
       
-      let infoInspecao = '';
-      if (!carroAtualVendido) {
-        infoInspecao = `
-          <p style="margin-top:8px;">
-            <b>Última inspeção de bateria:</b> ${c.DataUltimaInspecaoBateria || '-'}
-            <br>
-            ${c.inspecaoAtrasada ? `<span class="badge atraso" style="margin-top:6px;">Atrasada (${c.diasDesdeInspecao}d)</span>` : `<span class="badge ok" style="margin-top:6px;">Em dia</span>`}
-          </p>`;
-      } else {
-        infoInspecao = `<p style="margin-top:8px; color:var(--vermelho);"><b>Vendido em:</b> ${c.DataVenda}</p>`;
-      }
+      const c = d.carro; 
+      carroAtualVendido = !!d.vendido; 
+      const m = simplificarModelo(c.Modelo);
+      
+      document.getElementById('fichaTitulo').textContent = `${m} — ${c.Chassi}`;
+      document.getElementById('avisoVendido').style.display = carroAtualVendido ? 'block' : 'none';
+      
+      ['acoesFicha','formHistorico','formPendencias'].forEach(id => {
+        document.getElementById(id).style.display = carroAtualVendido ? 'none' : 'flex';
+      });
+      
+      const img = document.getElementById('fichaImgModelo'); 
+      img.src = obterCaminhoImagem(m); 
+      img.style.display = img.src ? 'block' : 'none';
       
       document.getElementById('fichaDados').innerHTML = `
         <p><b>Versão:</b> ${c.Modelo}</p>
-        <p><b>Cor:</b> ${c.Cor} &nbsp; <b>Ano:</b> ${c.Ano || '-'}</p>
-        <p style="margin-top:8px;"><b>Entrada no estoque:</b> ${c.DataEntrada}</p>
-        ${infoInspecao}
-      `;
+        <p><b>Cor:</b> ${c.Cor} · <b>Ano:</b> ${c.Ano}</p>
+        <p><b>Entrada:</b> ${c.DataEntrada}</p>
+        ${!carroAtualVendido ? `
+          <p><b>Bateria:</b> ${c.DataUltimaInspecaoBateria || '-'}<br>
+          <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">${c.inspecaoAtrasada ? 'Atrasada' : 'Em dia'}</span></p>
+        ` : `
+          <p><b>Vendido:</b> ${c.DataVenda}</p>
+        `}`;
       
-      const fotosGerais = JSON.parse(c.FotosGeraisJSON || '[]');
-      const fotosAvarias = JSON.parse(c.FotosAvariasJSON || '[]');
+      let fg = [], fa = []; 
+      try { 
+        fg = JSON.parse(c.FotosGeraisJSON); 
+        fa = JSON.parse(c.FotosAvariasJSON); 
+      } catch(e) {}
       
-      document.getElementById('fichaFotosGerais').innerHTML =
-        fotosGerais.map(u => `<img src="${u}" onclick="window.open('${u}','_blank')">`).join('') +
-        fotosAvarias.map(u => `<img src="${u}" style="border:2px solid var(--vermelho)" onclick="window.open('${u}','_blank')">`).join('');
-        
-      renderizarHistorico(dados.historico || []);
-      renderizarPendencias(dados.pendencias || []);
-      mudarSubTab('historico');
+      document.getElementById('fichaFotosGerais').innerHTML = 
+        fg.map(u => `<img src="${u}" onclick="window.open('${u}')">`).join('') + 
+        fa.map(u => `<img src="${u}" style="border:2px solid red" onclick="window.open('${u}')">`).join('');
       
-      document.querySelectorAll('.chk-servico').forEach(c => c.checked = false);
-      document.getElementById('novoServicoOutro').value = '';
-      document.getElementById('campoLocalMartelinho').style.display = 'none';
+      const cHist = document.getElementById('listaHistorico'); 
+      cHist.innerHTML = d.historico.length ? d.historico.map(h => `
+        <div class="item-historico">
+          <div><b>${h.Data}</b> — ${h.Descricao}</div>
+        </div>
+      `).join('') : '<div class="vazio">Sem registros.</div>';
+      
+      const cPend = document.getElementById('listaPendencias'); 
+      cPend.innerHTML = d.pendencias.length ? d.pendencias.map(p => `
+        <div class="item-pendencia ${p.Status === 'Concluído' ? 'concluida' : ''}">
+          <div><b>${p.Item}</b>${p.Local ? '<br><span style="font-size:11px">📍 ' + p.Local + '</span>' : ''}</div>
+          ${p.Status !== 'Concluído' && !carroAtualVendido ? `
+            <button class="acao secundario restrito" onclick="concluirPendencia('${p.Id}')">Concluir</button>
+          ` : ''}
+        </div>
+      `).join('') : '<div class="vazio">Nenhuma OS.</div>';
+      
+      mudarSubTab('historico'); 
+      document.querySelectorAll('.chk-servico').forEach(x => x.checked = false); 
+      document.getElementById('novoServicoOutro').value = ''; 
       document.getElementById('localMartelinho').value = '';
     }
 
-    function renderizarHistorico(lista) {
-      const cont = document.getElementById('listaHistorico');
-      if (lista.length === 0) { 
-        cont.innerHTML = '<div class="vazio">Sem registros ainda.</div>'; 
-        return; 
-      }
-      cont.innerHTML = lista.map(h => `
-        <div class="item-historico">
-          <div><b style="color:var(--primary);">${h.Data}</b> — ${h.Descricao}</div>
-        </div>
-      `).join('');
+    function mudarSubTab(tab) { 
+      document.getElementById('tabHistorico').classList.toggle('ativo', tab === 'historico'); 
+      document.getElementById('tabPendencias').classList.toggle('ativo', tab === 'pendencias'); 
+      document.getElementById('subHistorico').style.display = tab === 'historico' ? 'block' : 'none'; 
+      document.getElementById('subPendencias').style.display = tab === 'pendencias' ? 'block' : 'none'; 
     }
-
-    function renderizarPendencias(lista) {
-      const cont = document.getElementById('listaPendencias');
-      if (lista.length === 0) { 
-        cont.innerHTML = '<div class="vazio">Nenhum serviço pendente.</div>'; 
-        return; 
-      }
-      cont.innerHTML = lista.map(p => `
-        <div class="item-pendencia ${p.Status === 'Concluído' ? 'concluida' : ''}">
-          <div><strong>${p.Item}</strong>${p.Local ? '<br><span style="font-size:12px;color:var(--texto-suave)">📍 ' + p.Local + '</span>' : ''}</div>
-          ${p.Status !== 'Concluído' && !carroAtualVendido ? `<button class="acao secundario" onclick="concluirPendencia('${p.Id}')">Concluir</button>` : (p.Status === 'Concluído' ? '✅' : '')}
-        </div>
-      `).join('');
+    
+    async function salvarHistorico() { 
+      const t = document.getElementById('novoHistoricoTexto').value; 
+      if(!t) return; 
+      
+      await chamarApiPost({
+        action: 'adicionarHistorico', 
+        chassi: chassiAtual, 
+        descricao: t
+      }); 
+      
+      document.getElementById('novoHistoricoTexto').value = ''; 
+      mostrarToast('Salvo!'); 
+      abrirFicha(chassiAtual); 
     }
-
-    function mudarSubTab(tab) {
-      document.getElementById('tabHistorico').classList.toggle('ativo', tab === 'historico');
-      document.getElementById('tabPendencias').classList.toggle('ativo', tab === 'pendencias');
-      document.getElementById('subHistorico').style.display = tab === 'historico' ? 'block' : 'none';
-      document.getElementById('subPendencias').style.display = tab === 'pendencias' ? 'block' : 'none';
-    }
-
-    // ---------- ações da ficha ----------
-    async function salvarHistorico() {
-      const texto = document.getElementById('novoHistoricoTexto').value.trim();
-      if (!texto) return;
+    
+    async function salvarPendencias() { 
+      const s = Array.from(document.querySelectorAll('.chk-servico')).filter(c => c.checked).map(c => c.value);
+      const o = document.getElementById('novoServicoOutro').value;
+      const l = document.getElementById('localMartelinho').value; 
       
-      await chamarApiPost({ action: 'adicionarHistorico', chassi: chassiAtual, descricao: texto });
+      if(!s.length && !o) return; 
       
-      document.getElementById('novoHistoricoTexto').value = '';
-      mostrarToast('Registrado no histórico.');
-      abrirFicha(chassiAtual);
-    }
-
-    async function salvarPendencias() {
-      const selecionados = Array.from(document.querySelectorAll('.chk-servico'))
-        .filter(c => c.checked).map(c => c.value);
-      
-      const outro = document.getElementById('novoServicoOutro').value.trim();
-      const local = document.getElementById('localMartelinho').value.trim();
-      
-      if (selecionados.length === 0 && !outro) {
-        mostrarToast('Selecione ao menos um serviço.');
-        return;
+      for(const x of s) {
+        await chamarApiPost({
+          action: 'adicionarPendencia', 
+          chassi: chassiAtual, 
+          item: x, 
+          local: x.includes('Martelinho') ? l : ''
+        }); 
       }
       
-      for (const servico of selecionados) {
-        const localParaEsse = servico.includes('Martelinho') ? local : '';
-        await chamarApiPost({ action: 'adicionarPendencia', chassi: chassiAtual, item: servico, local: localParaEsse });
+      if(o) {
+        await chamarApiPost({
+          action: 'adicionarPendencia', 
+          chassi: chassiAtual, 
+          item: o
+        }); 
       }
       
-      if (outro) {
-        await chamarApiPost({ action: 'adicionarPendencia', chassi: chassiAtual, item: outro, local: '' });
-      }
-      
-      mostrarToast('Serviços Adicionados.');
-      abrirFicha(chassiAtual);
+      mostrarToast('OS Gerada!'); 
+      abrirFicha(chassiAtual); 
     }
-
-    async function concluirPendencia(id) {
-      await chamarApiPost({ action: 'concluirPendencia', id });
-      mostrarToast('Serviço concluído!');
-      abrirFicha(chassiAtual);
+    
+    async function concluirPendencia(id) { 
+      await chamarApiPost({
+        action: 'concluirPendencia', 
+        id
+      }); 
+      abrirFicha(chassiAtual); 
     }
-
-    async function registrarInspecao() {
-      await chamarApiPost({ action: 'registrarInspecaoBateria', chassi: chassiAtual });
-      mostrarToast('Inspeção de Bateria Registrada.');
-      abrirFicha(chassiAtual);
-      
-      if (document.getElementById('tabEstoque').classList.contains('ativo')) {
-        carregarCarros();
-      } else {
-        carregarVendidos();
-      }
+    
+    async function registrarInspecao() { 
+      await chamarApiPost({
+        action: 'registrarInspecaoBateria', 
+        chassi: chassiAtual
+      }); 
+      abrirFicha(chassiAtual); 
+      carregarCarros(); 
     }
-
+    
     function abrirModalVenda() { 
       abrirModal('modalVenda'); 
     }
-
-    async function confirmarVenda() {
-      const data = document.getElementById('dataVenda').value;
-      await chamarApiPost({ action: 'marcarVendido', chassi: chassiAtual, dataVenda: data });
-      
-      fecharModal('modalVenda');
-      fecharModal('modalFicha');
-      mostrarToast('Carro Marcado como Vendido.');
-      carregarCarros();
+    
+    async function confirmarVenda() { 
+      await chamarApiPost({
+        action: 'marcarVendido', 
+        chassi: chassiAtual, 
+        dataVenda: document.getElementById('dataVenda').value
+      }); 
+      fecharModal('modalVenda'); 
+      fecharModal('modalFicha'); 
+      carregarCarros(); 
     }
-
-    // ---------- remover carro ----------
-    function abrirModalRemover() {
-      document.getElementById('removerUsuario').value = '';
-      document.getElementById('removerSenha').value = '';
-      document.getElementById('erroRemover').style.display = 'none';
-      abrirModal('modalRemover');
+    
+    function abrirModalRemover() { 
+      document.getElementById('erroRemover').style.display = 'none'; 
+      abrirModal('modalRemover'); 
     }
-
-    async function confirmarRemocao() {
-      const usuario = document.getElementById('removerUsuario').value.trim();
-      const senha = document.getElementById('removerSenha').value;
-      const erroEl = document.getElementById('erroRemover');
+    
+    async function confirmarRemocao() { 
+      const u = document.getElementById('removerUsuario').value;
+      const s = document.getElementById('removerSenha').value;
       
-      erroEl.style.display = 'none';
+      const r = await chamarApiPost({
+        action: 'removerCarro', 
+        chassi: chassiAtual, 
+        usuario: u, 
+        senha: s
+      }); 
       
-      const resultado = await chamarApiPost({ action: 'removerCarro', chassi: chassiAtual, usuario, senha });
-      
-      if (resultado.erro) {
-        erroEl.textContent = resultado.erro;
-        erroEl.style.display = 'block';
+      if(r.erro) { 
+        const e = document.getElementById('erroRemover'); 
+        e.textContent = r.erro; 
+        e.style.display = 'block'; 
         return;
-      }
+      } 
       
-      fecharModal('modalRemover');
-      fecharModal('modalFicha');
-      mostrarToast('Carro removido.');
-      
-      if (document.getElementById('tabEstoque').classList.contains('ativo')) {
-        carregarCarros();
-      } else {
-        carregarVendidos();
-      }
+      fecharModal('modalRemover'); 
+      fecharModal('modalFicha'); 
+      carregarCarros(); 
     }
-
-    // ---------- fotos ----------
-    function enviarFoto(event, categoria) {
-      const arquivo = event.target.files[0];
-      if (!arquivo) return;
+    
+    function enviarFoto(e, cat) { 
+      const a = e.target.files[0]; 
+      if(!a) return; 
       
-      const leitor = new FileReader();
-      
-      leitor.onload = async function() {
-        const base64 = leitor.result.split(',')[1];
-        mostrarToast('Enviando Foto...');
-        
+      const l = new FileReader(); 
+      l.onload = async function() { 
         await chamarApiPost({
           action: 'uploadFoto', 
           chassi: chassiAtual, 
-          nomeArquivo: arquivo.name,
-          base64, 
-          tipoMime: arquivo.type, 
-          categoria
-        });
-        
-        mostrarToast('Foto Enviada!');
-        abrirFicha(chassiAtual);
-      };
-      
-      leitor.readAsDataURL(arquivo);
+          nomeArquivo: a.name, 
+          base64: l.result.split(',')[1], 
+          tipoMime: a.type, 
+          categoria: cat
+        }); 
+        abrirFicha(chassiAtual); 
+      }; 
+      l.readAsDataURL(a); 
     }
-
-    // ---------- novo carro ----------
-    async function salvarNovoCarro() {
-      const dados = {
-        chassi: document.getElementById('novoChassi').value.trim(),
-        modelo: document.getElementById('novoModelo').value.trim(),
-        cor: document.getElementById('novoCor').value.trim(),
-        ano: document.getElementById('novoAno').value.trim(),
+    
+    async function salvarNovoCarro() { 
+      const d = {
+        chassi: document.getElementById('novoChassi').value.trim(), 
+        modelo: document.getElementById('novoModelo').value, 
+        cor: document.getElementById('novoCor').value, 
+        ano: document.getElementById('novoAno').value, 
         dataEntrada: document.getElementById('novoDataEntrada').value
-      };
+      }; 
       
-      if (!dados.chassi || !dados.modelo || !dados.cor) {
-        mostrarToast('Preencha chassi, modelo e cor.'); 
-        return;
+      if(!d.chassi || !d.modelo || !d.cor) {
+        return mostrarToast('Preencha os obrigatórios.'); 
       }
       
-      await chamarApiPost({ action: 'cadastrarCarro', dados });
+      await chamarApiPost({
+        action: 'cadastrarCarro', 
+        dados: d
+      }); 
       
-      fecharModal('modalNovoCarro');
-      mostrarToast('Carro Cadastrado!');
-      carregarCarros();
+      fecharModal('modalNovoCarro'); 
+      carregarCarros(); 
     }
-  </script>
-</body>
-</html>
   </script>
 </body>
 </html>
