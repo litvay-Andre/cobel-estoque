@@ -813,9 +813,12 @@
     function simplificarModelo(nome) { 
       if(!nome) return ''; 
       const n = nome.toLowerCase(); 
+      if(n.includes('omoda 4')) return 'Omoda 4'; 
       if(n.includes('omoda 5')) return 'Omoda 5'; 
-      if(n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7'; 
-      if(n.includes('jaecoo 5')) return 'Jaecoo 5'; 
+      if(n.includes('omoda 7')) return 'Omoda 7';
+      if(n.includes('jaecoo 5')) return 'Jaecoo 5';
+      if(n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7';
+      if(n.includes('jaecoo 8')) return 'Jaecoo 8';
       return nome; 
     }
     
