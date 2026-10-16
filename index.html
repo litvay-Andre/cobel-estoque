@@ -10,7 +10,6 @@
 
   <style>
     :root {
-      /* Tema Neutro (Login e Seleção de Marcas) */
       --primary: #111111; 
       --primary-2: #2b2b2b; 
       --accent: #555555;
@@ -464,7 +463,7 @@
       margin-bottom: 16px; 
     }
 
-    /* ESTILOS MAPA 2D */
+    /* ESTILOS MAPA 2D AJUSTADOS */
     .seletor-andar {
       display: flex;
       gap: 10px;
@@ -501,12 +500,13 @@
       margin-bottom: 20px;
     }
 
+    /* Escadaria perfeitamente encaixada embaixo à esquerda, sem sobrepor B e C */
     .escadaria {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 35%;
-      height: 45%;
+      height: 143px;
       background: rgba(210, 10, 17, 0.15);
       border-top: 2px dashed var(--vermelho);
       border-right: 2px dashed var(--vermelho);
@@ -540,16 +540,10 @@
       transform: scale(1.01);
     }
 
-    .corredor.selecionado {
-      background: rgba(59, 130, 246, 0.35);
-      border-width: 3px;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-    }
-
-    /* Posições dos 3 corredores */
+    /* Posicionamento exato dos corredores */
     .corredor-a { top: 12px; left: 12px; right: 12px; height: 100px; }
     .corredor-b { top: 124px; left: 12px; right: 12px; height: 95px; }
-    .corredor-c { bottom: 12px; left: 37%; right: 12px; height: 135px; }
+    .corredor-c { bottom: 12px; left: 37%; right: 12px; height: 131px; }
 
     .corredor-titulo {
       font-size: 15px;
@@ -595,7 +589,6 @@
       color: var(--primary);
     }
 
-    /* Login e Escolha de Marca */
     #telaLogin, #telaMarca { 
       position: fixed; 
       inset: 0; 
@@ -750,13 +743,11 @@
 </head>
 <body>
 
-  <!-- LOADING OVERLAY -->
   <div id="loadingOverlay">
     <div class="spinner"></div>
     <h3 id="loadingText" style="color:#fff;">PROCESSANDO...</h3>
   </div>
 
-  <!-- TELA DE LOGIN -->
   <div id="telaLogin">
     <div class="caixa-login">
       <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
@@ -775,7 +766,6 @@
     </div>
   </div>
 
-  <!-- TELA DE ESCOLHA DE MARCA -->
   <div id="telaMarca">
     <div class="titulo-marcas">SELECIONE A MARCA</div>
     <div class="caixa-marcas">
@@ -838,7 +828,7 @@
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
 
-        <button class="acao secundario" onclick="abrirMapa2D()">🗺️ Mapa 2D</button>
+        <button class="acao secundario" onclick="abrirMapa2D()">Mapa 2D</button>
         
         <div class="restrito" style="display:inline-flex; gap:10px;">
           <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Veículo</button>
@@ -854,7 +844,6 @@
     </main>
   </div>
 
-  <!-- MODAL: MAPA 2D DO ESTOQUE -->
   <div class="modal-fundo" id="modalMapa">
     <div class="modal" style="max-width: 850px;">
       <button class="fechar" onclick="fecharModal('modalMapa')">&times;</button>
@@ -867,24 +856,20 @@
       </div>
 
       <div class="planta-2d">
-        <!-- Escadaria em Vermelho -->
         <div class="escadaria">
           <span>Escadaria / Acesso</span>
         </div>
 
-        <!-- Corredor A (Cima) -->
         <div class="corredor corredor-a" id="corredorMapaA" onclick="filtrarPeloMapa('A')">
           <div class="corredor-titulo">CORREDOR A (PARTE SUPERIOR)</div>
           <div class="corredor-qtd" id="qtdCorredorA">0 carros</div>
         </div>
 
-        <!-- Corredor B (Meio) -->
         <div class="corredor corredor-b" id="corredorMapaB" onclick="filtrarPeloMapa('B')">
           <div class="corredor-titulo">CORREDOR B (PARTE CENTRAL)</div>
           <div class="corredor-qtd" id="qtdCorredorB">0 carros</div>
         </div>
 
-        <!-- Corredor C (Lado da Escadaria) -->
         <div class="corredor corredor-c" id="corredorMapaC" onclick="filtrarPeloMapa('C')">
           <div class="corredor-titulo">CORREDOR C (LADO DA ESCADARIA)</div>
           <div class="corredor-qtd" id="qtdCorredorC">0 carros</div>
@@ -908,7 +893,6 @@
     </div>
   </div>
 
-  <!-- MODAL: FICHA DO CARRO -->
   <div class="modal-fundo" id="modalFicha">
     <div class="modal" id="modalFichaContent" style="max-width:720px;">
       <button class="fechar" onclick="fecharModal('modalFicha')">&times;</button>
@@ -972,7 +956,6 @@
     </div>
   </div>
 
-  <!-- MODAL: NOVO CARRO -->
   <div class="modal-fundo" id="modalNovoCarro">
     <div class="modal">
       <button class="fechar" onclick="fecharModal('modalNovoCarro')">&times;</button>
@@ -1021,7 +1004,6 @@
     </div>
   </div>
 
-  <!-- MODAL: VENDA -->
   <div class="modal-fundo" id="modalVenda">
     <div class="modal" style="max-width: 400px;">
       <button class="fechar" onclick="fecharModal('modalVenda')">&times;</button>
@@ -1034,7 +1016,6 @@
     </div>
   </div>
 
-  <!-- MODAL: REMOVER CARRO -->
   <div class="modal-fundo" id="modalRemover">
     <div class="modal" style="max-width: 400px;">
       <button class="fechar" onclick="fecharModal('modalRemover')">&times;</button>
@@ -1145,22 +1126,18 @@
 
     async function chamarApi(params) { 
       mostrarLoading('Sincronizando Banco de Dados...'); 
-      
       const url = API_URL + '?' + new URLSearchParams(params).toString();
       const resp = await fetch(url); 
-      
       esconderLoading(); 
       return resp.json(); 
     }
 
     async function chamarApiPost(corpo) { 
       mostrarLoading('Atualizando Informações...'); 
-      
       const resp = await fetch(API_URL, { 
         method: 'POST', 
         body: JSON.stringify(corpo) 
       }); 
-      
       esconderLoading(); 
       return resp.json(); 
     }
@@ -1180,7 +1157,6 @@
       .then(r => r.json())
       .then(d => {
         esconderLoading();
-        
         if (d.sucesso) { 
           localStorage.setItem('cobel_autenticado', '1'); 
           localStorage.setItem('cobel_role', d.role); 
@@ -1192,7 +1168,7 @@
       })
       .catch(() => { 
         esconderLoading(); 
-        e.textContent = 'Erro de conexão.'; 
+        e.textContent = 'Erro de conexao.'; 
         e.style.display = 'block'; 
       });
     }
@@ -1205,7 +1181,6 @@
 
     function abrirTelaMarcas() {
       document.body.className = ''; 
-      
       document.getElementById('telaLogin').style.display = 'none';
       document.getElementById('app').style.display = 'none';
       document.getElementById('telaMarca').style.display = 'flex';
@@ -1217,9 +1192,7 @@
 
     function escolherMarca(marcaSelecionada) {
       marcaAtual = marcaSelecionada;
-      
       document.body.className = marcaAtual === 'oj' ? 'tema-oj' : 'tema-jetour';
-
       document.getElementById('telaMarca').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       
@@ -1235,7 +1208,6 @@
       const role = localStorage.getItem('cobel_role');
       if (role === 'admin') return true;
       if (role === marcaAtual) return true;
-      
       return false;
     }
 
@@ -1254,14 +1226,12 @@
           ${s}
         </label>
       `).join('');
-      
       document.getElementById('checklistServicos').innerHTML = checklistHTML; 
     }
 
     function verificarMartelinho() { 
       const servicos = Array.from(document.querySelectorAll('.chk-servico'));
       const temMartelinho = servicos.some(c => c.checked && c.value.includes('Martelinho'));
-      
       if (temMartelinho) {
         document.getElementById('campoLocalMartelinho').style.display = 'block';
       } else {
@@ -1289,16 +1259,16 @@
       
       let f = carrosCache.filter(c => { 
         const modText = (c.Modelo || '').toLowerCase();
-        
         const isJetour = modText.includes('jetour') || modText.includes('dashing') || modText.includes('x70');
         
         if (marcaAtual === 'oj' && isJetour) return false;
         if (marcaAtual === 'jetour' && !isJetour) return false;
 
         const t = c.Chassi + c.Modelo + c.Cor; 
-        
         const loc = c.Localizacao || '1-A';
-        const [andar, corredor] = loc.split('-');
+        const partesLoc = loc.split('-');
+        const andar = partesLoc[0] || '1';
+        const corredor = partesLoc[1] || 'A';
 
         return t.toLowerCase().includes(b) && 
                (fm === '' || modText.includes(fm)) && 
@@ -1315,7 +1285,6 @@
         const cardsHTML = f.map(c => {
           const m = simplificarModelo(c.Modelo);
           const i = obterCaminhoImagem(m);
-          
           let atrasoTexto = c.inspecaoAtrasada ? `Atrasada (${c.diasDesdeInspecao}d)` : 'Em Dia';
           let imgTag = i ? `<img class="card-img-modelo" src="${i}" onerror="this.style.display='none'">` : '';
           
@@ -1323,16 +1292,15 @@
             <div class="card-carro ${c.inspecaoAtrasada ? 'atrasado' : ''}" onclick="abrirFicha('${c.Chassi}')">
               <div class="card-info">
                 <h3>${m}</h3>
-                <p style="font-size:11px;margin-bottom:8px">Versão: ${c.Modelo}</p>
+                <p style="font-size:11px;margin-bottom:8px">Versao: ${c.Modelo}</p>
                 <p>Chassi: ${c.Chassi}</p>
-                <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
+                <p>Cor: ${c.Cor} - Ano: ${c.Ano || '-'}</p>
                 <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">${atrasoTexto}</span>
-                <span class="badge local">📍 ${c.Localizacao || '1-A'}</span>
+                <span class="badge local">Local: ${c.Localizacao || '1-A'}</span>
               </div>
               ${imgTag}
             </div>`;
         }).join('');
-        
         document.getElementById('listaCarros').innerHTML = cardsHTML;
       } else {
         document.getElementById('listaCarros').innerHTML = '<div class="vazio">Nenhum carro encontrado.</div>';
@@ -1355,7 +1323,6 @@
     document.getElementById('tabVendidos').addEventListener('click', async () => { 
       document.getElementById('tabVendidos').classList.add('ativo'); 
       document.getElementById('tabEstoque').classList.remove('ativo'); 
-      
       const d = await chamarApi({ action: 'listarVendidos' }); 
       carrosCache = d.vendidos || []; 
       renderizarLista(); 
@@ -1363,7 +1330,6 @@
 
     async function rodarSincronizacao() { 
       const r = await chamarApiPost({ action: 'sincronizar' }); 
-      
       if (r.erro) {
         mostrarToast(r.erro); 
       } else { 
@@ -1391,7 +1357,6 @@
       } 
     }
 
-    /* LÓGICA MAPA 2D */
     function abrirMapa2D() {
       abrirModal('modalMapa');
       mudarAndarMapa(1);
@@ -1399,16 +1364,13 @@
 
     function mudarAndarMapa(andar) {
       andarMapaAtual = andar;
-      
       document.getElementById('btnAndar1').classList.toggle('ativo', andar === 1);
       document.getElementById('btnAndar2').classList.toggle('ativo', andar === 2);
       document.getElementById('btnAndar3').classList.toggle('ativo', andar === 3);
-      
       atualizarEstatísticasMapa();
     }
 
     function atualizarEstatísticasMapa() {
-      // Filtra os carros no estoque por andar
       const filtroCarrosValidos = carrosCache.filter(c => {
         const modText = (c.Modelo || '').toLowerCase();
         const isJetour = modText.includes('jetour') || modText.includes('dashing') || modText.includes('x70');
@@ -1422,7 +1384,9 @@
 
       filtroCarrosValidos.forEach(c => {
         const loc = c.Localizacao || '1-A';
-        const [andar, corredor] = loc.split('-');
+        const partesLoc = loc.split('-');
+        const andar = partesLoc[0] || '1';
+        const corredor = partesLoc[1] || 'A';
 
         if (andar === '1') a1++;
         if (andar === '2') a2++;
@@ -1439,18 +1403,17 @@
       document.getElementById('totalAndar2').textContent = a2;
       document.getElementById('totalAndar3').textContent = a3;
 
-      document.getElementById('qtdCorredorA').textContent = `${corrA} carros`;
-      document.getElementById('qtdCorredorB').textContent = `${corrB} carros`;
-      document.getElementById('qtdCorredorC').textContent = `${corrC} carros`;
+      document.getElementById('qtdCorredorA').textContent = corrA + ' carros';
+      document.getElementById('qtdCorredorB').textContent = corrB + ' carros';
+      document.getElementById('qtdCorredorC').textContent = corrC + ' carros';
     }
 
     function filtrarPeloMapa(corredor) {
       document.getElementById('filtroAndar').value = andarMapaAtual.toString();
       document.getElementById('filtroCorredor').value = corredor;
-      
       fecharModal('modalMapa');
       renderizarLista();
-      mostrarToast(`Filtrado por: ${andarMapaAtual}º Andar - Corredor ${corredor}`);
+      mostrarToast('Filtrado por: ' + andarMapaAtual + 'º Andar - Corredor ' + corredor);
     }
 
     async function abrirFicha(chassi) {
@@ -1466,7 +1429,7 @@
       carroAtualVendido = !!d.vendido; 
       const m = simplificarModelo(c.Modelo);
       
-      document.getElementById('fichaTitulo').textContent = `${m} — ${c.Chassi}`;
+      document.getElementById('fichaTitulo').textContent = m + ' - ' + c.Chassi;
       
       if (carroAtualVendido) {
         document.getElementById('avisoVendido').style.display = 'block';
@@ -1482,7 +1445,6 @@
       
       const img = document.getElementById('fichaImgModelo'); 
       img.src = obterCaminhoImagem(m); 
-      
       if (img.src) {
         img.style.display = 'block';
       } else {
@@ -1502,16 +1464,18 @@
       }
       
       const locAtual = c.Localizacao || '1-A';
-      const [andarAtual, corredorAtual] = locAtual.split('-');
+      const partesLoc = locAtual.split('-');
+      const andarAtual = partesLoc[0] || '1';
+      const corredorAtual = partesLoc[1] || 'A';
 
       document.getElementById('fichaDados').innerHTML = `
-        <p><b>Versão:</b> ${c.Modelo}</p>
-        <p><b>Cor:</b> ${c.Cor} · <b>Ano:</b> ${c.Ano}</p>
+        <p><b>Versao:</b> ${c.Modelo}</p>
+        <p><b>Cor:</b> ${c.Cor} - <b>Ano:</b> ${c.Ano}</p>
         <p><b>Entrada:</b> ${c.DataEntrada}</p>
-        <p><b>Localização:</b> <span style="color:var(--azul-vaga); font-weight:bold;">${formatarLocal(locAtual)}</span></p>
+        <p><b>Localizacao:</b> <span style="color:var(--azul-vaga); font-weight:bold;">${formatarLocal(locAtual)}</span></p>
         
         <div style="margin-top:10px;" class="restrito">
-          <label style="font-size:11px; font-weight:bold; color:var(--texto-suave);">MUDAR LOCALIZAÇÃO:</label>
+          <label style="font-size:11px; font-weight:bold; color:var(--texto-suave);">MUDAR LOCALIZACAO:</label>
           <div style="display:flex; gap:6px; margin-top:4px;">
             <select id="mudarAndar" style="padding:4px;">
               <option value="1" ${andarAtual === '1' ? 'selected' : ''}>1º Andar</option>
@@ -1545,7 +1509,7 @@
       if (d.historico.length > 0) {
         cHist.innerHTML = d.historico.map(h => `
           <div class="item-historico">
-            <div><b>${h.Data}</b> — ${h.Descricao}</div>
+            <div><b>${h.Data}</b> - ${h.Descricao}</div>
           </div>
         `).join('');
       } else {
@@ -1555,14 +1519,12 @@
       const cPend = document.getElementById('listaPendencias'); 
       if (d.pendencias.length > 0) {
         cPend.innerHTML = d.pendencias.map(p => {
-          let classeConcluida = p.Status === 'Concluído' ? 'concluida' : '';
-          let localInfo = p.Local ? `<br><span style="font-size:11px">📍 ${p.Local}</span>` : '';
-          
+          let classeConcluida = p.Status === 'Concluido' ? 'concluida' : '';
+          let localInfo = p.Local ? `<br><span style="font-size:11px">Local: ${p.Local}</span>` : '';
           let botaoConcluir = '';
-          if (p.Status !== 'Concluído' && !carroAtualVendido) {
+          if (p.Status !== 'Concluido' && !carroAtualVendido) {
             botaoConcluir = `<button class="acao secundario restrito" onclick="concluirPendencia('${p.Id}')">Concluir</button>`;
           }
-          
           return `
             <div class="item-pendencia ${classeConcluida}">
               <div><b>${p.Item}</b>${localInfo}</div>
@@ -1575,7 +1537,6 @@
       }
       
       mudarSubTab('historico'); 
-      
       document.querySelectorAll('.chk-servico').forEach(x => x.checked = false); 
       document.getElementById('novoServicoOutro').value = ''; 
       document.getElementById('localMartelinho').value = '';
@@ -1584,7 +1545,7 @@
     async function salvarNovaLocalizacao() {
       const a = document.getElementById('mudarAndar').value;
       const c = document.getElementById('mudarCorredor').value;
-      const novaLoc = `${a}-${c}`;
+      const novaLoc = a + '-' + c;
 
       await chamarApiPost({
         action: 'atualizarLocalizacao',
@@ -1592,7 +1553,7 @@
         localizacao: novaLoc
       });
 
-      mostrarToast('Localização Atualizada!');
+      mostrarToast('Localizacao Atualizada!');
       abrirFicha(chassiAtual);
       carregarCarros();
     }
@@ -1613,13 +1574,11 @@
     async function salvarHistorico() { 
       const t = document.getElementById('novoHistoricoTexto').value; 
       if (!t) return; 
-      
       await chamarApiPost({ 
         action: 'adicionarHistorico', 
         chassi: chassiAtual, 
         descricao: t 
       }); 
-      
       document.getElementById('novoHistoricoTexto').value = ''; 
       mostrarToast('Salvo!'); 
       abrirFicha(chassiAtual); 
@@ -1628,7 +1587,6 @@
     async function salvarPendencias() { 
       const chkBoxes = document.querySelectorAll('.chk-servico');
       const selecionados = Array.from(chkBoxes).filter(c => c.checked).map(c => c.value);
-      
       const outroServico = document.getElementById('novoServicoOutro').value;
       const localAvaria = document.getElementById('localMartelinho').value; 
       
@@ -1684,7 +1642,6 @@
         chassi: chassiAtual, 
         dataVenda: dataVenda 
       }); 
-      
       fecharModal('modalVenda'); 
       fecharModal('modalFicha'); 
       carregarCarros(); 
@@ -1698,7 +1655,6 @@
     async function confirmarRemocao() { 
       const usuario = document.getElementById('removerUsuario').value;
       const senha = document.getElementById('removerSenha').value;
-      
       const r = await chamarApiPost({ 
         action: 'removerCarro', 
         chassi: chassiAtual, 
@@ -1725,7 +1681,6 @@
       const leitor = new FileReader(); 
       leitor.onload = async function() { 
         const base64Data = leitor.result.split(',')[1];
-        
         await chamarApiPost({ 
           action: 'uploadFoto', 
           chassi: chassiAtual, 
@@ -1734,28 +1689,25 @@
           tipoMime: arquivo.type, 
           categoria: categoria 
         }); 
-        
         abrirFicha(chassiAtual); 
       }; 
-      
       leitor.readAsDataURL(arquivo); 
     }
     
     async function salvarNovoCarro() { 
       const andar = document.getElementById('novoAndar').value;
       const corredor = document.getElementById('novoCorredor').value;
-      
       const dadosCarro = { 
         chassi: document.getElementById('novoChassi').value.trim(), 
         modelo: document.getElementById('novoModelo').value, 
         cor: document.getElementById('novoCor').value, 
         ano: document.getElementById('novoAno').value, 
         dataEntrada: document.getElementById('novoDataEntrada').value,
-        localizacao: `${andar}-${corredor}`
+        localizacao: andar + '-' + corredor
       }; 
       
       if (!dadosCarro.chassi || !dadosCarro.modelo || !dadosCarro.cor) {
-        return mostrarToast('Preencha os obrigatórios.'); 
+        return mostrarToast('Preencha os obrigatorios.'); 
       }
       
       await chamarApiPost({ 
