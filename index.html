@@ -13,7 +13,7 @@
       /* Tema Neutro (Login e Seleção de Marcas) */
       --primary: #111111; 
       --primary-2: #2b2b2b; 
-      --accent: #555555; /* Cinza neutro */
+      --accent: #555555;
       --accent-esc: #333333;
       --prata: #e5e7eb; 
       --bg: #f4f4f5; 
@@ -23,10 +23,10 @@
       --borda: #d1d5db; 
       --vermelho: #D20A11; 
       --cinza: #4b5563;
+      --azul-vaga: #3b82f6;
     }
 
     body.tema-oj {
-      /* Tema Original Omoda & Jaecoo */
       --primary: #111111; 
       --primary-2: #2b2b2b; 
       --accent: #D20A11; 
@@ -34,7 +34,6 @@
     }
 
     body.tema-jetour {
-      /* Tema Jetour baseado na identidade visual (Azul Marinho e Ciano) */
       --primary: #131c24; 
       --primary-2: #1e2c38; 
       --accent: #00a4a6; 
@@ -273,6 +272,11 @@
       background: var(--vermelho); 
     }
 
+    .badge.local { 
+      background: var(--azul-vaga); 
+      margin-left: 6px; 
+    }
+
     .modal-fundo { 
       position: fixed; 
       inset: 0; 
@@ -460,6 +464,137 @@
       margin-bottom: 16px; 
     }
 
+    /* ESTILOS MAPA 2D */
+    .seletor-andar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .seletor-andar button {
+      flex: 1;
+      padding: 12px;
+      background: var(--bg);
+      border: 2px solid var(--borda);
+      color: var(--texto);
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: .2s;
+    }
+
+    .seletor-andar button.ativo {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .planta-2d {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border: 3px solid var(--primary);
+      border-radius: 6px;
+      background: #f8fafc;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .escadaria {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 35%;
+      height: 45%;
+      background: rgba(210, 10, 17, 0.15);
+      border-top: 2px dashed var(--vermelho);
+      border-right: 2px dashed var(--vermelho);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--vermelho);
+      font-weight: bold;
+      font-size: 14px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .corredor {
+      position: absolute;
+      background: rgba(59, 130, 246, 0.12);
+      border: 2px solid #3b82f6;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: .2s;
+      padding: 8px;
+    }
+
+    .corredor:hover {
+      background: rgba(59, 130, 246, 0.25);
+      transform: scale(1.01);
+    }
+
+    .corredor.selecionado {
+      background: rgba(59, 130, 246, 0.35);
+      border-width: 3px;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Posições dos 3 corredores */
+    .corredor-a { top: 12px; left: 12px; right: 12px; height: 100px; }
+    .corredor-b { top: 124px; left: 12px; right: 12px; height: 95px; }
+    .corredor-c { bottom: 12px; left: 37%; right: 12px; height: 135px; }
+
+    .corredor-titulo {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+
+    .corredor-qtd {
+      font-size: 20px;
+      font-weight: bold;
+      font-family: 'Oswald';
+      color: var(--primary);
+      background: #fff;
+      padding: 2px 10px;
+      border-radius: 12px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .resumo-andares {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .card-resumo-andar {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid var(--borda);
+    }
+
+    .card-resumo-andar h4 {
+      font-size: 13px;
+      color: var(--texto-suave);
+    }
+
+    .card-resumo-andar p {
+      font-size: 22px;
+      font-family: 'Oswald';
+      color: var(--primary);
+    }
+
     /* Login e Escolha de Marca */
     #telaLogin, #telaMarca { 
       position: fixed; 
@@ -518,7 +653,6 @@
       text-align: center; 
     }
 
-    /* Estilos Tela de Marcas */
     #telaMarca { 
       z-index: 150; 
       display: none; 
@@ -564,7 +698,6 @@
       letter-spacing: 1px; 
     }
 
-    /* Overlay Loading */
     #loadingOverlay { 
       position: fixed; 
       inset: 0; 
@@ -610,7 +743,6 @@
       display: block; 
     }
 
-    /* Ocultar elementos restritos no modo leitura dinâmico */
     .modo-leitura .restrito { 
       display: none !important; 
     }
@@ -687,11 +819,27 @@
           <option value="jetour x70">G700</option>
         </select>
         <input type="text" id="filtroCor" placeholder="Filtrar por cor...">
+        
+        <select id="filtroAndar">
+          <option value="">Todos Andares</option>
+          <option value="1">1º Andar</option>
+          <option value="2">2º Andar</option>
+          <option value="3">3º Andar</option>
+        </select>
+
+        <select id="filtroCorredor">
+          <option value="">Todos Corredores</option>
+          <option value="A">Corredor A (Cima)</option>
+          <option value="B">Corredor B (Meio)</option>
+          <option value="C">Corredor C (Escadaria)</option>
+        </select>
+
         <label class="filtro-atraso">
           <input type="checkbox" id="filtroAtraso"> Inspeção Atrasada
         </label>
+
+        <button class="acao secundario" onclick="abrirMapa2D()">🗺️ Mapa 2D</button>
         
-        <!-- Botões que somem se for modo leitura -->
         <div class="restrito" style="display:inline-flex; gap:10px;">
           <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Veículo</button>
           <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
@@ -704,6 +852,60 @@
         Desenvolvido por <b>André Litvay - Cobel</b>
       </div>
     </main>
+  </div>
+
+  <!-- MODAL: MAPA 2D DO ESTOQUE -->
+  <div class="modal-fundo" id="modalMapa">
+    <div class="modal" style="max-width: 850px;">
+      <button class="fechar" onclick="fecharModal('modalMapa')">&times;</button>
+      <h2>Mapa 2D do Estacionamento</h2>
+
+      <div class="seletor-andar">
+        <button id="btnAndar1" class="ativo" onclick="mudarAndarMapa(1)">1º ANDAR</button>
+        <button id="btnAndar2" onclick="mudarAndarMapa(2)">2º ANDAR</button>
+        <button id="btnAndar3" onclick="mudarAndarMapa(3)">3º ANDAR</button>
+      </div>
+
+      <div class="planta-2d">
+        <!-- Escadaria em Vermelho -->
+        <div class="escadaria">
+          <span>Escadaria / Acesso</span>
+        </div>
+
+        <!-- Corredor A (Cima) -->
+        <div class="corredor corredor-a" id="corredorMapaA" onclick="filtrarPeloMapa('A')">
+          <div class="corredor-titulo">CORREDOR A (PARTE SUPERIOR)</div>
+          <div class="corredor-qtd" id="qtdCorredorA">0 carros</div>
+        </div>
+
+        <!-- Corredor B (Meio) -->
+        <div class="corredor corredor-b" id="corredorMapaB" onclick="filtrarPeloMapa('B')">
+          <div class="corredor-titulo">CORREDOR B (PARTE CENTRAL)</div>
+          <div class="corredor-qtd" id="qtdCorredorB">0 carros</div>
+        </div>
+
+        <!-- Corredor C (Lado da Escadaria) -->
+        <div class="corredor corredor-c" id="corredorMapaC" onclick="filtrarPeloMapa('C')">
+          <div class="corredor-titulo">CORREDOR C (LADO DA ESCADARIA)</div>
+          <div class="corredor-qtd" id="qtdCorredorC">0 carros</div>
+        </div>
+      </div>
+
+      <div class="resumo-andares">
+        <div class="card-resumo-andar">
+          <h4>TOTAL 1º ANDAR</h4>
+          <p id="totalAndar1">0</p>
+        </div>
+        <div class="card-resumo-andar">
+          <h4>TOTAL 2º ANDAR</h4>
+          <p id="totalAndar2">0</p>
+        </div>
+        <div class="card-resumo-andar">
+          <h4>TOTAL 3º ANDAR</h4>
+          <p id="totalAndar3">0</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- MODAL: FICHA DO CARRO -->
@@ -789,6 +991,24 @@
           <input type="text" id="novoCor">
         </div>
       </div>
+      <div class="linha-2">
+        <div class="campo">
+          <label>Andar *</label>
+          <select id="novoAndar">
+            <option value="1">1º Andar</option>
+            <option value="2">2º Andar</option>
+            <option value="3">3º Andar</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Corredor *</label>
+          <select id="novoCorredor">
+            <option value="A">Corredor A (Cima)</option>
+            <option value="B">Corredor B (Meio)</option>
+            <option value="C">Corredor C (Escadaria)</option>
+          </select>
+        </div>
+      </div>
       <div class="campo">
         <label>Ano</label>
         <input type="text" id="novoAno">
@@ -864,7 +1084,8 @@
     let chassiAtual = null;
     let carroAtualVendido = false;
     let clickCobel = 0;
-    let marcaAtual = ''; // Pode ser 'oj' ou 'jetour'
+    let marcaAtual = ''; 
+    let andarMapaAtual = 1;
 
     function mostrarLoading(texto = 'PROCESSANDO...') { 
       document.getElementById('loadingText').textContent = texto; 
@@ -901,7 +1122,6 @@
       if (n.includes('jaecoo 7') || n.includes('j7')) return 'Jaecoo 7'; 
       if (n.includes('jaecoo 8')) return 'Jaecoo 8';
       
-      // Jetour extrações
       if (n.includes('t1')) return 'T1';
       if (n.includes('t2')) return 'T2';
       if (n.includes('s06')) return 'S06'; 
@@ -912,6 +1132,15 @@
     
     function obterCaminhoImagem(mod) { 
       return IMAGENS_MODELOS[mod?.trim().toLowerCase()] || ''; 
+    }
+
+    function formatarLocal(loc) {
+      if (!loc) return '1-A';
+      const partes = loc.split('-');
+      if (partes.length === 2) {
+        return `${partes[0]}º Andar - Corredor ${partes[1]}`;
+      }
+      return loc;
     }
 
     async function chamarApi(params) { 
@@ -970,12 +1199,11 @@
 
     function sair() { 
       localStorage.clear(); 
-      document.body.className = ''; // Remove qualquer tema visual
+      document.body.className = ''; 
       location.reload(); 
     }
 
     function abrirTelaMarcas() {
-      // Limpa os temas da página para aplicar as cores neutras de seleção de marca
       document.body.className = ''; 
       
       document.getElementById('telaLogin').style.display = 'none';
@@ -990,13 +1218,11 @@
     function escolherMarca(marcaSelecionada) {
       marcaAtual = marcaSelecionada;
       
-      // Injeta a classe CSS que altera as variáveis :root
       document.body.className = marcaAtual === 'oj' ? 'tema-oj' : 'tema-jetour';
 
       document.getElementById('telaMarca').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       
-      // Atualiza o logo no cabeçalho de acordo com a marca
       const imgLogo = document.getElementById('logoAtiva');
       imgLogo.src = marcaAtual === 'oj' ? 'logo-oj.png' : 'logo-jetour.png';
       
@@ -1005,7 +1231,6 @@
       carregarCarros();
     }
 
-    // Calcula se o usuário tem permissão para editar os dados do estoque atual
     function usuarioPodeEditar() {
       const role = localStorage.getItem('cobel_role');
       if (role === 'admin') return true;
@@ -1014,7 +1239,6 @@
       return false;
     }
 
-    // Oculta "Novo Carro" e "Sincronizar" se for apenas visualizador do estoque atual
     function aplicarPermissoesDeMarca() {
       if (usuarioPodeEditar()) {
         document.body.classList.remove('modo-leitura');
@@ -1060,11 +1284,12 @@
       const soA = document.getElementById('filtroAtraso').checked;
       const fm = document.getElementById('filtroModelo').value.toLowerCase();
       const fc = document.getElementById('filtroCor').value.toLowerCase();
+      const fa = document.getElementById('filtroAndar').value;
+      const fcorr = document.getElementById('filtroCorredor').value;
       
       let f = carrosCache.filter(c => { 
         const modText = (c.Modelo || '').toLowerCase();
         
-        // Filtro Inteligente de Marca
         const isJetour = modText.includes('jetour') || modText.includes('dashing') || modText.includes('x70');
         
         if (marcaAtual === 'oj' && isJetour) return false;
@@ -1072,9 +1297,14 @@
 
         const t = c.Chassi + c.Modelo + c.Cor; 
         
+        const loc = c.Localizacao || '1-A';
+        const [andar, corredor] = loc.split('-');
+
         return t.toLowerCase().includes(b) && 
                (fm === '' || modText.includes(fm)) && 
-               (fc === '' || (c.Cor || '').toLowerCase().includes(fc)); 
+               (fc === '' || (c.Cor || '').toLowerCase().includes(fc)) &&
+               (fa === '' || andar === fa) &&
+               (fcorr === '' || corredor === fcorr);
       });
       
       if (soA) {
@@ -1097,6 +1327,7 @@
                 <p>Chassi: ${c.Chassi}</p>
                 <p>Cor: ${c.Cor} · Ano: ${c.Ano || '-'}</p>
                 <span class="badge ${c.inspecaoAtrasada ? 'atraso' : 'ok'}">${atrasoTexto}</span>
+                <span class="badge local">📍 ${c.Localizacao || '1-A'}</span>
               </div>
               ${imgTag}
             </div>`;
@@ -1112,6 +1343,8 @@
     document.getElementById('filtroAtraso').addEventListener('change', renderizarLista); 
     document.getElementById('filtroModelo').addEventListener('change', renderizarLista); 
     document.getElementById('filtroCor').addEventListener('input', renderizarLista);
+    document.getElementById('filtroAndar').addEventListener('change', renderizarLista);
+    document.getElementById('filtroCorredor').addEventListener('change', renderizarLista);
     
     document.getElementById('tabEstoque').addEventListener('click', () => { 
       document.getElementById('tabEstoque').classList.add('ativo'); 
@@ -1158,6 +1391,68 @@
       } 
     }
 
+    /* LÓGICA MAPA 2D */
+    function abrirMapa2D() {
+      abrirModal('modalMapa');
+      mudarAndarMapa(1);
+    }
+
+    function mudarAndarMapa(andar) {
+      andarMapaAtual = andar;
+      
+      document.getElementById('btnAndar1').classList.toggle('ativo', andar === 1);
+      document.getElementById('btnAndar2').classList.toggle('ativo', andar === 2);
+      document.getElementById('btnAndar3').classList.toggle('ativo', andar === 3);
+      
+      atualizarEstatísticasMapa();
+    }
+
+    function atualizarEstatísticasMapa() {
+      // Filtra os carros no estoque por andar
+      const filtroCarrosValidos = carrosCache.filter(c => {
+        const modText = (c.Modelo || '').toLowerCase();
+        const isJetour = modText.includes('jetour') || modText.includes('dashing') || modText.includes('x70');
+        if (marcaAtual === 'oj' && isJetour) return false;
+        if (marcaAtual === 'jetour' && !isJetour) return false;
+        return true;
+      });
+
+      let a1 = 0, a2 = 0, a3 = 0;
+      let corrA = 0, corrB = 0, corrC = 0;
+
+      filtroCarrosValidos.forEach(c => {
+        const loc = c.Localizacao || '1-A';
+        const [andar, corredor] = loc.split('-');
+
+        if (andar === '1') a1++;
+        if (andar === '2') a2++;
+        if (andar === '3') a3++;
+
+        if (andar == andarMapaAtual) {
+          if (corredor === 'A') corrA++;
+          if (corredor === 'B') corrB++;
+          if (corredor === 'C') corrC++;
+        }
+      });
+
+      document.getElementById('totalAndar1').textContent = a1;
+      document.getElementById('totalAndar2').textContent = a2;
+      document.getElementById('totalAndar3').textContent = a3;
+
+      document.getElementById('qtdCorredorA').textContent = `${corrA} carros`;
+      document.getElementById('qtdCorredorB').textContent = `${corrB} carros`;
+      document.getElementById('qtdCorredorC').textContent = `${corrC} carros`;
+    }
+
+    function filtrarPeloMapa(corredor) {
+      document.getElementById('filtroAndar').value = andarMapaAtual.toString();
+      document.getElementById('filtroCorredor').value = corredor;
+      
+      fecharModal('modalMapa');
+      renderizarLista();
+      mostrarToast(`Filtrado por: ${andarMapaAtual}º Andar - Corredor ${corredor}`);
+    }
+
     async function abrirFicha(chassi) {
       chassiAtual = chassi; 
       abrirModal('modalFicha');
@@ -1179,7 +1474,6 @@
         document.getElementById('avisoVendido').style.display = 'none';
       }
       
-      // Controle de leitura dinâmico para a ficha
       if (!usuarioPodeEditar() || carroAtualVendido) {
         document.getElementById('modalFichaContent').classList.add('modo-leitura');
       } else {
@@ -1207,10 +1501,32 @@
         infoBateria = `<p><b>Vendido:</b> ${c.DataVenda}</p>`;
       }
       
+      const locAtual = c.Localizacao || '1-A';
+      const [andarAtual, corredorAtual] = locAtual.split('-');
+
       document.getElementById('fichaDados').innerHTML = `
         <p><b>Versão:</b> ${c.Modelo}</p>
         <p><b>Cor:</b> ${c.Cor} · <b>Ano:</b> ${c.Ano}</p>
         <p><b>Entrada:</b> ${c.DataEntrada}</p>
+        <p><b>Localização:</b> <span style="color:var(--azul-vaga); font-weight:bold;">${formatarLocal(locAtual)}</span></p>
+        
+        <div style="margin-top:10px;" class="restrito">
+          <label style="font-size:11px; font-weight:bold; color:var(--texto-suave);">MUDAR LOCALIZAÇÃO:</label>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <select id="mudarAndar" style="padding:4px;">
+              <option value="1" ${andarAtual === '1' ? 'selected' : ''}>1º Andar</option>
+              <option value="2" ${andarAtual === '2' ? 'selected' : ''}>2º Andar</option>
+              <option value="3" ${andarAtual === '3' ? 'selected' : ''}>3º Andar</option>
+            </select>
+            <select id="mudarCorredor" style="padding:4px;">
+              <option value="A" ${corredorAtual === 'A' ? 'selected' : ''}>Corredor A</option>
+              <option value="B" ${corredorAtual === 'B' ? 'selected' : ''}>Corredor B</option>
+              <option value="C" ${corredorAtual === 'C' ? 'selected' : ''}>Corredor C</option>
+            </select>
+            <button class="acao" style="padding:4px 10px; font-size:12px;" onclick="salvarNovaLocalizacao()">Salvar Local</button>
+          </div>
+        </div>
+
         ${infoBateria}
       `;
       
@@ -1263,6 +1579,22 @@
       document.querySelectorAll('.chk-servico').forEach(x => x.checked = false); 
       document.getElementById('novoServicoOutro').value = ''; 
       document.getElementById('localMartelinho').value = '';
+    }
+
+    async function salvarNovaLocalizacao() {
+      const a = document.getElementById('mudarAndar').value;
+      const c = document.getElementById('mudarCorredor').value;
+      const novaLoc = `${a}-${c}`;
+
+      await chamarApiPost({
+        action: 'atualizarLocalizacao',
+        chassi: chassiAtual,
+        localizacao: novaLoc
+      });
+
+      mostrarToast('Localização Atualizada!');
+      abrirFicha(chassiAtual);
+      carregarCarros();
     }
 
     function mudarSubTab(tab) { 
@@ -1410,12 +1742,16 @@
     }
     
     async function salvarNovoCarro() { 
+      const andar = document.getElementById('novoAndar').value;
+      const corredor = document.getElementById('novoCorredor').value;
+      
       const dadosCarro = { 
         chassi: document.getElementById('novoChassi').value.trim(), 
         modelo: document.getElementById('novoModelo').value, 
         cor: document.getElementById('novoCor').value, 
         ano: document.getElementById('novoAno').value, 
-        dataEntrada: document.getElementById('novoDataEntrada').value 
+        dataEntrada: document.getElementById('novoDataEntrada').value,
+        localizacao: `${andar}-${corredor}`
       }; 
       
       if (!dadosCarro.chassi || !dadosCarro.modelo || !dadosCarro.cor) {
