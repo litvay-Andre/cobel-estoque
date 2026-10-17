@@ -748,20 +748,23 @@
     <h3 id="loadingText" style="color:#fff;">PROCESSANDO...</h3>
   </div>
 
+<!-- TELA DE LOGIN -->
   <div id="telaLogin">
     <div class="caixa-login">
       <img src="logo-cobel.png" alt="Cobel" onerror="this.style.display='none'">
       <h2>Sistema de Estoque</h2>
       <p>Acesso restrito à equipe do Grupo Cobel</p>
-      <div class="campo">
-        <label>Usuário</label>
-        <input type="text" id="loginUsuario">
-      </div>
-      <div class="campo">
-        <label>Senha</label>
-        <input type="password" id="loginSenha">
-      </div>
-      <button class="acao" onclick="fazerLogin()">Entrar</button>
+      <form onsubmit="event.preventDefault(); fazerLogin();">
+        <div class="campo">
+          <label>Usuário</label>
+          <input type="text" id="loginUsuario">
+        </div>
+        <div class="campo">
+          <label>Senha</label>
+          <input type="password" id="loginSenha">
+        </div>
+        <button type="submit" class="acao">Entrar</button>
+      </form>
       <div class="erro-login" id="erroLogin"></div>
     </div>
   </div>
@@ -780,7 +783,7 @@
 
   <div id="app" style="display:none;">
     <header>
-      <div class="logos-header" onclick="comandoSecreto()">
+      <div class="logos-header"
         <img src="logo-cobel2.png" alt="Cobel" onerror="this.style.display='none'">
         <img id="logoAtiva" src="" alt="Marca" onerror="this.style.display='none'">
       </div>
@@ -832,7 +835,7 @@
         
         <div class="restrito" style="display:inline-flex; gap:10px;">
           <button class="acao" id="btnNovoCarro" onclick="abrirModal('modalNovoCarro')">+ Novo Veículo</button>
-          <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Sincronizar ERP</button>
+          <button class="acao secundario" id="btnSincronizar" onclick="rodarSincronizacao()">Atualizar Estoque</button>
         </div>
       </div>
       
@@ -1334,25 +1337,6 @@
         mostrarToast(r.erro); 
       } else { 
         mostrarToast(r.carrosAdicionados + ' carros importados!'); 
-        carregarCarros(); 
-      } 
-    }
-
-    function comandoSecreto() {
-      clickCobel++;
-      if (clickCobel >= 5) {
-        clickCobel = 0;
-        if (confirm('MODO ADMIN: Deseja apagar o estoque atual e recriar sincronizando do zero com a aba ERP?')) {
-          resetTudo();
-        }
-      }
-      setTimeout(() => clickCobel = 0, 3000);
-    }
-
-    async function resetTudo() { 
-      const r = await chamarApiPost({ action: 'resetSync' }); 
-      if (!r.erro) { 
-        mostrarToast('Estoque formatado!'); 
         carregarCarros(); 
       } 
     }
